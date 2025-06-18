@@ -29,7 +29,7 @@ const PhotoboothMain: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream-50 via-background to-olive-50">
+    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-background to-olive-50">
       {/* Header Romântico */}
       <div className="text-center pt-12 pb-8 px-4">
         <div className="inline-flex items-center justify-center space-x-2 mb-4">
@@ -38,7 +38,7 @@ const PhotoboothMain: React.FC = () => {
           <Sparkles className="w-6 h-6 text-olive-500 animate-pulse" />
         </div>
         
-        <h1 className="text-4xl md:text-5xl font-serif text-olive-800 mb-3 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-display font-semibold text-olive-800 mb-3 tracking-tight">
           Photobooth do Casamento
         </h1>
         
@@ -54,14 +54,14 @@ const PhotoboothMain: React.FC = () => {
         <div className="max-w-md mx-auto">
           <Button
             onClick={() => setShowCamera(true)}
-            className="w-full h-16 bg-gradient-to-r from-olive-500 to-olive-600 hover:from-olive-600 hover:to-olive-700 text-white rounded-2xl font-serif text-lg tracking-wide shadow-2xl hover:shadow-olive-500/25 transition-all duration-500 animate-scale-in romantic-glow"
+            className="w-full h-16 bg-gradient-to-r from-olive-500 to-olive-600 hover:from-olive-600 hover:to-olive-700 text-white rounded-2xl font-display font-medium text-lg tracking-wide shadow-2xl hover:shadow-olive-500/25 transition-all duration-500 animate-scale-in romantic-glow"
           >
             <CameraIcon className="w-6 h-6 mr-3" />
             Criar Foto ou Vídeo
           </Button>
           
           <div className="text-center mt-4 space-y-2">
-            <p className="text-sm text-olive-600">
+            <p className="text-sm text-olive-600 font-medium">
               📸 Até 3 fotos sequenciais ou 🎥 vídeo de 15 segundos
             </p>
             <p className="text-xs text-olive-500">
@@ -80,7 +80,7 @@ const PhotoboothMain: React.FC = () => {
       <footer className="mt-16 py-8 text-center px-4 border-t border-olive-200/50">
         <div className="flex items-center justify-center space-x-2 mb-3">
           <Heart className="w-4 h-4 text-olive-500" />
-          <span className="text-olive-700 font-serif text-sm">
+          <span className="text-olive-700 font-display font-medium text-sm">
             Ana & João • 15 de Dezembro, 2024
           </span>
           <Heart className="w-4 h-4 text-olive-500" />

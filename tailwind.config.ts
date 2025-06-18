@@ -63,30 +63,30 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Paleta personalizada do photobooth
+				// Paleta personalizada verde oliva moderna
 				olive: {
-					50: '#f7f8f3',
-					100: '#eef0e7',
-					200: '#dde2cf',
-					300: '#c7cfb0',
-					400: '#a8b584',
-					500: '#8c9a68',
-					600: '#6d7c4f',
-					700: '#5a6542',
-					800: '#4a5338',
-					900: '#3f4632',
+					50: '#f8f9f5',
+					100: '#f1f4e8',
+					200: '#e3e9d1',
+					300: '#cfd8b0',
+					400: '#b4c185',
+					500: '#98a665',
+					600: '#7d8a4e',
+					700: '#636c3f',
+					800: '#4b553a',
+					900: '#293018',
 				},
-				cream: {
-					50: '#fefcf9',
-					100: '#fdf8f0',
-					200: '#faeee0',
-					300: '#f6e0c9',
-					400: '#f0ccaa',
-					500: '#e8b68b',
-					600: '#dda16b',
-					700: '#cc8b52',
-					800: '#a66f42',
-					900: '#865a37',
+				sage: {
+					50: '#f7f8f5',
+					100: '#eff1ea',
+					200: '#dfe3d4',
+					300: '#c8d0b5',
+					400: '#a8b588',
+					500: '#8a9865',
+					600: '#6d7a4e',
+					700: '#556040',
+					800: '#464e36',
+					900: '#3a412f',
 				}
 			},
 			borderRadius: {
@@ -166,8 +166,8 @@ export default {
 				'shimmer': 'shimmer 2s linear infinite'
 			},
 			fontFamily: {
-				'serif': ['Playfair Display', 'serif'],
-				'sans': ['Inter', 'sans-serif'],
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'display': ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
 			}
 		}
 	},

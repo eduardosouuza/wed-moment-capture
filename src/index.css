@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,83 +8,83 @@
 
 @layer base {
   :root {
-    --background: 254 252 249;
-    --foreground: 63 70 50;
+    --background: 252 252 249;
+    --foreground: 41 47 31;
 
-    --card: 254 252 249;
-    --card-foreground: 63 70 50;
+    --card: 252 252 249;
+    --card-foreground: 41 47 31;
 
-    --popover: 254 252 249;
-    --popover-foreground: 63 70 50;
+    --popover: 252 252 249;
+    --popover-foreground: 41 47 31;
 
-    --primary: 109 124 79;
-    --primary-foreground: 247 248 243;
+    --primary: 75 85 58;
+    --primary-foreground: 248 250 245;
 
-    --secondary: 238 240 231;
-    --secondary-foreground: 90 101 66;
+    --secondary: 230 235 220;
+    --secondary-foreground: 60 68 45;
 
-    --muted: 250 238 224;
-    --muted-foreground: 140 154 104;
+    --muted: 240 243 232;
+    --muted-foreground: 120 135 95;
 
-    --accent: 250 238 224;
-    --accent-foreground: 90 101 66;
+    --accent: 240 243 232;
+    --accent-foreground: 60 68 45;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 221 226 207;
-    --input: 221 226 207;
-    --ring: 109 124 79;
+    --border: 210 220 195;
+    --input: 210 220 195;
+    --ring: 75 85 58;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 254 252 249;
-    --sidebar-foreground: 63 70 50;
-    --sidebar-primary: 109 124 79;
-    --sidebar-primary-foreground: 247 248 243;
-    --sidebar-accent: 238 240 231;
-    --sidebar-accent-foreground: 90 101 66;
-    --sidebar-border: 221 226 207;
-    --sidebar-ring: 109 124 79;
+    --sidebar-background: 252 252 249;
+    --sidebar-foreground: 41 47 31;
+    --sidebar-primary: 75 85 58;
+    --sidebar-primary-foreground: 248 250 245;
+    --sidebar-accent: 230 235 220;
+    --sidebar-accent-foreground: 60 68 45;
+    --sidebar-border: 210 220 195;
+    --sidebar-ring: 75 85 58;
   }
 
   .dark {
-    --background: 43 49 36;
-    --foreground: 247 248 243;
+    --background: 30 34 24;
+    --foreground: 248 250 245;
 
-    --card: 43 49 36;
-    --card-foreground: 247 248 243;
+    --card: 30 34 24;
+    --card-foreground: 248 250 245;
 
-    --popover: 43 49 36;
-    --popover-foreground: 247 248 243;
+    --popover: 30 34 24;
+    --popover-foreground: 248 250 245;
 
-    --primary: 168 181 132;
-    --primary-foreground: 43 49 36;
+    --primary: 120 135 95;
+    --primary-foreground: 30 34 24;
 
-    --secondary: 74 83 56;
-    --secondary-foreground: 247 248 243;
+    --secondary: 50 57 38;
+    --secondary-foreground: 248 250 245;
 
-    --muted: 74 83 56;
-    --muted-foreground: 168 181 132;
+    --muted: 50 57 38;
+    --muted-foreground: 120 135 95;
 
-    --accent: 74 83 56;
-    --accent-foreground: 247 248 243;
+    --accent: 50 57 38;
+    --accent-foreground: 248 250 245;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 74 83 56;
-    --input: 74 83 56;
-    --ring: 168 181 132;
+    --border: 50 57 38;
+    --input: 50 57 38;
+    --ring: 120 135 95;
 
-    --sidebar-background: 43 49 36;
-    --sidebar-foreground: 247 248 243;
-    --sidebar-primary: 168 181 132;
-    --sidebar-primary-foreground: 43 49 36;
-    --sidebar-accent: 74 83 56;
-    --sidebar-accent-foreground: 247 248 243;
-    --sidebar-border: 74 83 56;
-    --sidebar-ring: 168 181 132;
+    --sidebar-background: 30 34 24;
+    --sidebar-foreground: 248 250 245;
+    --sidebar-primary: 120 135 95;
+    --sidebar-primary-foreground: 30 34 24;
+    --sidebar-accent: 50 57 38;
+    --sidebar-accent-foreground: 248 250 245;
+    --sidebar-border: 50 57 38;
+    --sidebar-ring: 120 135 95;
   }
 }
 
@@ -103,19 +103,19 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.4),
+      rgba(75, 85, 58, 0.4),
       transparent
     );
     background-size: 200% 100%;
   }
   
   .romantic-glow {
-    box-shadow: 0 0 20px rgba(109, 124, 79, 0.3);
+    box-shadow: 0 0 20px rgba(75, 85, 58, 0.3);
   }
   
   .glass-effect {
     backdrop-filter: blur(10px);
-    background: rgba(254, 252, 249, 0.8);
-    border: 1px solid rgba(109, 124, 79, 0.2);
+    background: rgba(252, 252, 249, 0.8);
+    border: 1px solid rgba(75, 85, 58, 0.2);
   }
 }

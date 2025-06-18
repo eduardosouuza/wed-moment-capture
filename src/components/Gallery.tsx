@@ -48,10 +48,10 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
   if (media.length === 0) {
     return (
       <div className="text-center py-16 px-4">
-        <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-olive-100 to-cream-100 rounded-full flex items-center justify-center">
+        <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-olive-100 to-sage-100 rounded-full flex items-center justify-center">
           <Heart className="w-16 h-16 text-olive-400" />
         </div>
-        <h3 className="text-xl font-serif text-olive-800 mb-2">
+        <h3 className="text-xl font-display font-semibold text-olive-800 mb-2">
           Galeria de Memórias
         </h3>
         <p className="text-olive-600 max-w-sm mx-auto">
@@ -64,7 +64,7 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
   return (
     <div className="py-8">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-serif text-olive-800 mb-2">
+        <h2 className="text-3xl font-display font-semibold text-olive-800 mb-2">
           Galeria de Memórias
         </h2>
         <p className="text-olive-600">
@@ -165,7 +165,7 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
               {/* Media Info */}
               <div className="p-4 flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 font-medium">
                     Capturado em {formatDate(selectedMedia.timestamp)}
                   </p>
                 </div>
@@ -183,7 +183,7 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
                           : 'text-gray-600'
                       }`}
                     />
-                    <span className="text-sm">
+                    <span className="text-sm font-medium">
                       {likedItems.has(selectedMedia.id) ? 'Curtido' : 'Curtir'}
                     </span>
                   </Button>
@@ -194,7 +194,7 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
                     className="flex items-center space-x-1"
                   >
                     <Download className="w-4 h-4" />
-                    <span className="text-sm">Baixar</span>
+                    <span className="text-sm font-medium">Baixar</span>
                   </Button>
                 </div>
               </div>
