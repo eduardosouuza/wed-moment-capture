@@ -22,43 +22,80 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
   const [error, setError] = useState<string | null>(null);
 
   const startCamera = useCallback(async () => {
-    console.log('Tentando iniciar câmera...');
+    console.log('Iniciando câmera...');
+    
     try {
-      // Para primeiro qualquer stream existente
+      // Parar streams existentes
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach(track => {
+          console.log('Parando track existente:', track.kind);
+          track.stop();
+        });
       }
 
-      // Solicita acesso à câmera
-      const constraints = {
-        video: { 
+      // Verificar se getUserMedia está disponível
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Camera não suportada neste dispositivo/navegador');
+      }
+
+      // Constraints mais simples para compatibilidade
+      const constraints: MediaStreamConstraints = {
+        video: {
           facingMode,
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+          width: { ideal: 1280, max: 1920 },
+          height: { ideal: 720, max: 1080 }
         },
         audio: true
       };
 
-      console.log('Solicitando acesso à câmera com constraints:', constraints);
+      console.log('Solicitando permissão da câmera...');
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      console.log('Stream obtido:', stream);
+      console.log('Stream obtido com sucesso:', stream);
       
       streamRef.current = stream;
       
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        console.log('Stream atribuído ao elemento video');
         
-        // Aguarda o video estar pronto
-        videoRef.current.onloadedmetadata = () => {
-          console.log('Metadata do video carregada');
+        const handleLoadedMetadata = () => {
+          console.log('Video metadata carregada');
           setCameraReady(true);
           setError(null);
         };
+
+        const handleError = (e: Event) => {
+          console.error('Erro no elemento video:', e);
+          setError('Erro ao carregar o vídeo da câmera');
+        };
+
+        videoRef.current.onloadedmetadata = handleLoadedMetadata;
+        videoRef.current.onerror = handleError;
+        
+        // Tentar reproduzir o vídeo
+        try {
+          await videoRef.current.play();
+          console.log('Vídeo iniciado com sucesso');
+        } catch (playError) {
+          console.error('Erro ao reproduzir vídeo:', playError);
+        }
       }
     } catch (error) {
-      console.error('Erro ao acessar câmera:', error);
-      setError(`Erro ao acessar a câmera: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+      console.error('Erro detalhado ao acessar câmera:', error);
+      let errorMessage = 'Erro desconhecido ao acessar a câmera';
+      
+      if (error instanceof Error) {
+        if (error.name === 'NotAllowedError') {
+          errorMessage = 'Permissão de câmera negada. Por favor, permita o acesso à câmera.';
+        } else if (error.name === 'NotFoundError') {
+          errorMessage = 'Nenhuma câmera encontrada neste dispositivo.';
+        } else if (error.name === 'NotSupportedError') {
+          errorMessage = 'Câmera não suportada neste navegador.';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      setError(errorMessage);
       setCameraReady(false);
     }
   }, [facingMode]);
@@ -67,7 +104,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
     startCamera();
     
     return () => {
-      console.log('Limpando resources da câmera');
+      console.log('Limpando recursos da câmera');
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => {
           console.log('Parando track:', track.kind);
@@ -78,9 +115,9 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
   }, [startCamera]);
 
   const takePhoto = useCallback(() => {
-    console.log('Tirando foto...');
+    console.log('Capturando foto...');
     if (!videoRef.current || !canvasRef.current || capturedPhotos.length >= 3) {
-      console.log('Não é possível tirar foto - condições não atendidas');
+      console.log('Não é possível capturar foto');
       return;
     }
 
@@ -88,46 +125,69 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
     const video = videoRef.current;
     const context = canvas.getContext('2d');
 
-    if (context) {
+    if (context && video.videoWidth > 0 && video.videoHeight > 0) {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       context.drawImage(video, 0, 0);
       
-      const photoData = canvas.toDataURL('image/jpeg', 0.8);
+      const photoData = canvas.toDataURL('image/jpeg', 0.9);
       console.log('Foto capturada, tamanho:', photoData.length);
       setCapturedPhotos(prev => [...prev, photoData]);
+    } else {
+      console.error('Erro: contexto do canvas ou dimensões do vídeo inválidas');
     }
   }, [capturedPhotos.length]);
 
   const startRecording = useCallback(() => {
     console.log('Iniciando gravação...');
     if (!streamRef.current) {
-      console.log('Stream não disponível para gravação');
+      console.log('Stream não disponível');
       return;
     }
 
     try {
+      // Verificar tipos MIME suportados
+      const mimeTypes = [
+        'video/webm;codecs=vp9',
+        'video/webm;codecs=vp8',
+        'video/webm',
+        'video/mp4'
+      ];
+
+      let selectedMimeType = '';
+      for (const mimeType of mimeTypes) {
+        if (MediaRecorder.isTypeSupported(mimeType)) {
+          selectedMimeType = mimeType;
+          break;
+        }
+      }
+
+      if (!selectedMimeType) {
+        throw new Error('Nenhum formato de vídeo suportado');
+      }
+
+      console.log('Usando MIME type:', selectedMimeType);
       const mediaRecorder = new MediaRecorder(streamRef.current, {
-        mimeType: 'video/webm;codecs=vp8'
+        mimeType: selectedMimeType
       });
       
       mediaRecorderRef.current = mediaRecorder;
       const chunks: BlobPart[] = [];
 
       mediaRecorder.ondataavailable = (event) => {
-        console.log('Dados de vídeo disponíveis:', event.data.size);
+        console.log('Dados disponíveis:', event.data.size);
         if (event.data.size > 0) {
           chunks.push(event.data);
         }
       };
 
       mediaRecorder.onstop = () => {
-        console.log('Gravação parada, processando...');
-        const blob = new Blob(chunks, { type: 'video/webm' });
+        console.log('Gravação finalizada');
+        const blob = new Blob(chunks, { type: selectedMimeType });
         
         const reader = new FileReader();
         reader.onloadend = () => {
-          console.log('Vídeo convertido para base64');
+          console.log('Vídeo processado');
           onCapture({
             type: 'video',
             data: reader.result as string,
@@ -140,10 +200,10 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
       mediaRecorder.start();
       setIsRecording(true);
       
-      // Timer para gravação (máximo 15 segundos)
+      // Timer para gravação
       const timer = setInterval(() => {
         setRecordingTime(prev => {
-          if (prev >= 14) { // Para aos 15 segundos
+          if (prev >= 14) {
             stopRecording();
             clearInterval(timer);
             return 0;
@@ -219,6 +279,13 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
           <p className="text-lg mb-2">Carregando câmera...</p>
           <p className="text-sm text-gray-300">Permita o acesso quando solicitado</p>
+          <Button 
+            onClick={onClose} 
+            variant="outline" 
+            className="mt-4 border-white text-white hover:bg-white/20"
+          >
+            Cancelar
+          </Button>
         </div>
       </div>
     );
@@ -304,7 +371,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
                 className={`w-16 h-16 rounded-full transition-all duration-300 mb-2 ${
                   isRecording 
                     ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                    : 'bg-olive-500 hover:bg-olive-600'
+                    : 'bg-green-600 hover:bg-green-700'
                 }`}
               >
                 <Video className="w-8 h-8 text-white" />
@@ -325,7 +392,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
             
             <Button
               onClick={submitPhotos}
-              className="w-12 h-12 rounded-full bg-olive-500 hover:bg-olive-600"
+              className="w-12 h-12 rounded-full bg-green-600 hover:bg-green-700"
             >
               <Check className="w-6 h-6 text-white" />
             </Button>
