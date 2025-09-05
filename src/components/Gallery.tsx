@@ -1,7 +1,7 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Download, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/supabase';
 
 interface MediaItem {
   id: string;
@@ -11,11 +11,34 @@ interface MediaItem {
   likes?: number;
 }
 
-interface GalleryProps {
-  media: MediaItem[];
-}
-
-const Gallery: React.FC<GalleryProps> = ({ media }) => {
+const Gallery: React.FC = () => {
+  const [media, setMedia] = useState<MediaItem[]>([]);
+  
+  useEffect(() => {
+    const fetchMedia = async () => {
+      const { data, error } = await supabase
+        .from('media')
+        .select('*')
+        .order('uploaded_at', { ascending: false })
+        .limit(100);
+      
+      if (error) {
+        console.error('Erro ao buscar mídias:', error);
+        return;
+      }
+      
+      const mediaItems = data.map(item => ({
+        id: item.id,
+        type: item.media_type,
+        data: supabase.storage.from('media-bucket').getPublicUrl(item.file_path).data.publicUrl,
+        timestamp: new Date(item.uploaded_at).getTime()
+      }));
+      
+      setMedia(mediaItems);
+    };
+    
+    fetchMedia();
+  }, []);
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
   const [likedItems, setLikedItems] = useState<Set<string>>(new Set());
 
@@ -31,11 +54,22 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
     });
   };
 
-  const downloadMedia = (media: MediaItem) => {
-    const link = document.createElement('a');
-    link.href = media.data;
-    link.download = `photobooth-${media.type}-${new Date(media.timestamp).toISOString()}`;
-    link.click();
+  const downloadMedia = async (media: MediaItem) => {
+    try {
+      const response = await fetch(media.data);
+      if (!response.ok) throw new Error('Falha ao buscar mídia');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `photobooth-${media.type}-${new Date(media.timestamp).toISOString()}${media.type === 'photo' ? '.png' : '.mp4'}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Erro ao baixar mídia:', error);
+    }
   };
 
   const formatDate = (timestamp: number) => {
@@ -133,25 +167,32 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
 
       {/* Lightbox */}
       {selectedMedia && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl max-h-full w-full">
-            {/* Close Button */}
-            <Button
-              onClick={() => setSelectedMedia(null)}
-              variant="ghost"
-              size="sm"
-              className="absolute -top-12 right-0 text-white hover:bg-white/20 z-10"
-            >
-              <X className="w-6 h-6" />
-            </Button>
-
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedMedia(null)}
+        >
+          <div 
+            className="relative max-w-4xl max-h-full w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Media Content */}
-            <div className="bg-white rounded-lg overflow-hidden">
+            <div className="bg-white rounded-lg overflow-hidden relative">
+              {/* Close Button */}
+              <Button
+                onClick={() => setSelectedMedia(null)}
+                variant="ghost"
+                size="sm"
+                className="absolute top-4 right-4 bg-black/50 text-white hover:bg-black/70 z-20 rounded-full p-2"
+              >
+                <X className="w-6 h-6" />
+              </Button>
+              
               {selectedMedia.type === 'photo' ? (
                 <img
                   src={selectedMedia.data}
                   alt="Momento capturado"
-                  className="w-full h-auto max-h-[70vh] object-contain"
+                  className="w-full h-auto max-h-[70vh] object-contain cursor-pointer"
+                  onClick={() => setSelectedMedia(null)}
                 />
               ) : (
                 <video
@@ -161,7 +202,7 @@ const Gallery: React.FC<GalleryProps> = ({ media }) => {
                   className="w-full h-auto max-h-[70vh] object-contain"
                 />
               )}
-
+              
               {/* Media Info */}
               <div className="p-4 flex items-center justify-between">
                 <div>

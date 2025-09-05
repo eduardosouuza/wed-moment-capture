@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Camera as CameraIcon, Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,7 +28,7 @@ const PhotoboothMain: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-background to-olive-50">
+    <div className="min-h-screen bg-olive-300">
       {/* Header Romântico */}
       <div className="text-center pt-12 pb-8 px-4">
         <div className="inline-flex items-center justify-center space-x-2 mb-4">
@@ -62,7 +61,7 @@ const PhotoboothMain: React.FC = () => {
           
           <div className="text-center mt-4 space-y-2">
             <p className="text-sm text-olive-600 font-medium">
-              📸 Até 3 fotos sequenciais ou 🎥 vídeo de 15 segundos
+              📸 Countdown 5s + 3 fotos sequenciais ou 🎥 vídeo de 15 segundos
             </p>
             <p className="text-xs text-olive-500">
               Suas criações aparecerão na galeria abaixo ✨
@@ -81,7 +80,7 @@ const PhotoboothMain: React.FC = () => {
         <div className="flex items-center justify-center space-x-2 mb-3">
           <Heart className="w-4 h-4 text-olive-500" />
           <span className="text-olive-700 font-display font-medium text-sm">
-            Ana & João • 15 de Dezembro, 2024
+            Vitoria & Eduardo • 20 de Setembro, 2025
           </span>
           <Heart className="w-4 h-4 text-olive-500" />
         </div>
