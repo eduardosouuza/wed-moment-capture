@@ -59,6 +59,28 @@ const Gallery: React.FC = () => {
       const response = await fetch(media.data);
       if (!response.ok) throw new Error('Falha ao buscar mídia');
       const blob = await response.blob();
+      
+      // Tentar usar Web Share API para salvar na galeria do celular
+      if (navigator.share && navigator.canShare) {
+        const fileName = `photobooth-${media.type}-${new Date(media.timestamp).toISOString()}${media.type === 'photo' ? '.png' : '.mp4'}`;
+        const file = new File([blob], fileName, { type: blob.type });
+        
+        if (navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'Momento Capturado',
+              text: 'Compartilhar ou salvar na galeria'
+            });
+            return;
+          } catch (shareError) {
+            console.log('Compartilhamento cancelado ou falhou:', shareError);
+            // Continua para o download tradicional
+          }
+        }
+      }
+      
+      // Fallback: download tradicional
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
