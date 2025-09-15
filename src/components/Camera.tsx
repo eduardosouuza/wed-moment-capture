@@ -501,7 +501,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
       {/* Área principal */}
       <div className="flex-1 flex items-center justify-center bg-black p-4 min-h-0">
         {error ? (
-          <div className="w-full max-w-sm mx-auto bg-red-900 text-white p-6 rounded-lg text-center">
+          <div className="w-full max-w-sm mx-auto bg-olive-800 text-white p-6 rounded-lg text-center">
             <h2 className="text-lg mb-3">Erro na Câmera</h2>
             <p className="mb-3 text-sm">{error}</p>
             <p className="text-xs mb-3">Status: {status}</p>
@@ -540,7 +540,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
             
             {/* Recording indicator */}
             {isRecording && (
-              <div className="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-medium animate-pulse">
+              <div className="absolute top-3 right-3 bg-olive-600 text-white px-2 py-1 rounded-full text-sm font-medium animate-pulse">
                 REC {recordingTime}s
               </div>
             )}
@@ -552,7 +552,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
             
             {/* Countdown antes da captura */}
             {countdown > 0 && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600/90 text-white px-6 py-4 rounded-full text-center animate-pulse">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-olive-700/90 text-white px-6 py-4 rounded-full text-center animate-pulse">
                 <div className="text-6xl font-bold">{countdown}</div>
                 <div className="text-sm mt-2">Prepare-se!</div>
               </div>
@@ -588,7 +588,7 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
             disabled={!!error || status !== 'Câmera pronta!' || isCapturing || countdown > 0}
             className={`w-16 h-16 md:w-20 md:h-20 rounded-full ${
               mode === 'video' && isRecording
-                ? 'bg-red-500 hover:bg-red-600'
+                ? 'bg-olive-600 hover:bg-olive-700'
                 : isCapturing || countdown > 0
                 ? 'bg-gray-400'
                 : 'bg-white hover:bg-gray-100'
@@ -664,13 +664,13 @@ const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
                <Button 
                  onClick={cancelSave}
                  variant="outline" 
-                 className="flex-1"
+                 className="flex-1 border-olive-400 text-olive-700 hover:bg-olive-50"
                >
                  Cancelar
                </Button>
                <Button 
                  onClick={confirmSave}
-                 className="flex-1 bg-green-600 hover:bg-green-700"
+                 className="flex-1 bg-olive-600 hover:bg-olive-700 text-white"
                >
                  Salvar na Galeria
                </Button>
