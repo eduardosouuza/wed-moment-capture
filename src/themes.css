@@ -1,0 +1,104 @@
+/* Temas de cores para eventos - SEM AMARELO */
+
+/* Tema Purple (Roxo Moderno) - Padrão */
+.theme-gray,
+.min-h-screen.theme-gray {
+  --theme-bg: #FAFAFA;
+  --theme-primary: #9333EA;
+  --theme-secondary: #A855F7;
+  --theme-accent: #F3E8FF;
+}
+
+.theme-gray {
+  background-color: var(--theme-bg) !important;
+}
+
+/* Tema Rose (Rosa Romântico) */
+.theme-rose,
+.min-h-screen.theme-rose {
+  --theme-bg: #FFF5F5;
+  --theme-primary: #D4A5A5;
+  --theme-secondary: #C9979B;
+  --theme-accent: #FFE5E5;
+}
+
+.theme-rose {
+  background-color: var(--theme-bg) !important;
+}
+
+.theme-rose .bg-gray-300 {
+  background-color: #FFE5E5 !important;
+}
+
+.theme-rose .text-gray-500 {
+  color: #D4A5A5 !important;
+}
+
+.theme-rose .text-gray-600 {
+  color: #C9979B !important;
+}
+
+.theme-rose .text-gray-700 {
+  color: #B88A8E !important;
+}
+
+.theme-rose .text-gray-800 {
+  color: #A67882 !important;
+}
+
+.theme-rose .from-gray-500 {
+  --tw-gradient-from: #D4A5A5 !important;
+}
+
+.theme-rose .to-gray-600 {
+  --tw-gradient-to: #C9979B !important;
+}
+
+.theme-rose .border-gray-200 {
+  border-color: #FFD5D5 !important;
+}
+
+/* Tema Ocean (Azul Elegante) */
+.theme-ocean,
+.min-h-screen.theme-ocean {
+  --theme-bg: #F0F8FF;
+  --theme-primary: #4A90A4;
+  --theme-secondary: #2C5F7B;
+  --theme-accent: #A8D8E6;
+}
+
+.theme-ocean {
+  background-color: var(--theme-bg) !important;
+}
+
+.theme-ocean .bg-gray-300 {
+  background-color: #A8D8E6 !important;
+}
+
+.theme-ocean .text-gray-500 {
+  color: #4A90A4 !important;
+}
+
+.theme-ocean .text-gray-600 {
+  color: #3A7A8E !important;
+}
+
+.theme-ocean .text-gray-700 {
+  color: #2C5F7B !important;
+}
+
+.theme-ocean .text-gray-800 {
+  color: #1E4D68 !important;
+}
+
+.theme-ocean .from-gray-500 {
+  --tw-gradient-from: #4A90A4 !important;
+}
+
+.theme-ocean .to-gray-600 {
+  --tw-gradient-to: #3A7A8E !important;
+}
+
+.theme-ocean .border-gray-200 {
+  border-color: #C8E8F0 !important;
+}

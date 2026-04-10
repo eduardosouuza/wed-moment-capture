@@ -1,0 +1,128 @@
+// INSTRUÇÕES PARA ATUALIZAR Camera.tsx MANUALMENTE
+
+// ============================================
+// PASSO 1: Abrir o arquivo Camera.tsx
+// ============================================
+// Arquivo: src/components/Camera.tsx
+
+// ============================================
+// PASSO 2: Encontrar as linhas 6-9 (interface CameraProps)
+// ============================================
+// SUBSTITUIR ISTO:
+
+interface CameraProps {
+  onCapture: (mediaData: { type: 'photo' | 'video'; data: string; timestamp: number }) => void;
+  onClose: () => void;
+}
+
+// ============================================
+// POR ISTO:
+// ============================================
+
+interface CameraProps {
+  onCapture: (mediaData: { type: 'photo' | 'video'; data: string; timestamp: number }) => void;
+  onClose: () => void;
+  eventId?: string;
+  coupleName1?: string;
+  coupleName2?: string;
+  eventDate?: string;
+}
+
+// ============================================
+// PASSO 3: Encontrar a linha 11 (const Camera)
+// ============================================
+// SUBSTITUIR ISTO:
+
+const Camera: React.FC<CameraProps> = ({ onCapture, onClose }) => {
+
+// ============================================
+// POR ISTO:
+// ============================================
+
+const Camera: React.FC<CameraProps> = ({ 
+  onCapture, 
+  onClose, 
+  eventId,
+  coupleName1 = 'Vitoria',
+  coupleName2 = 'Eduardo',
+  eventDate = '20 de Setembro, 2025'
+}) => {
+
+// ============================================
+// PASSO 4: Encontrar as linhas 269-279 (texto do layout das fotos)
+// ============================================
+// Procure por este bloco (~linha 269):
+
+      // Adicionar texto do casamento centralizado na área inferior
+      ctx.fillStyle = '#333333';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Vitoria & Eduardo', finalWidth / 2, textCenterY - 15);
+      
+      ctx.font = '16px sans-serif';
+      ctx.fillText('20 de Setembro, 2025', finalWidth / 2, textCenterY + 10);
+
+// ============================================
+// SUBSTITUIR POR ISTO:
+// ============================================
+
+      // Adicionar texto do casamento centralizado na área inferior
+      ctx.fillStyle = '#333333';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${coupleName1} & ${coupleName2}`, finalWidth / 2, textCenterY - 15);
+      
+      ctx.font = '16px sans-serif';
+      ctx.fillText(eventDate, finalWidth / 2, textCenterY + 10);
+
+// ============================================
+// PASSO 5: Encontrar as linhas ~420-428 (upload da foto)
+// ============================================
+// Procure por este bloco (~linha 420):
+
+        const { data: insertData, error: insertError } = await supabase
+          .from('media')
+          .insert([
+            {
+              file_path: uploadData.path,
+              media_type: 'photo',
+            }
+          ]);
+
+// ============================================
+// SUBSTITUIR POR ISTO:
+// ============================================
+
+        const { data: insertData, error: insertError } = await supabase
+          .from('media')
+          .insert([
+            {
+              file_path: uploadData.path,
+              media_type: 'photo',
+              event_id: eventId || null,
+            }
+          ]);
+
+// ============================================
+// PASSO 6: Encontrar as linhas ~370 (metadados do vídeo) 
+// ============================================
+// Procure por: metadata: {
+
+          metadata: {
+            event_id: eventId,
+            plan: plan,
+          },
+
+// ============================================
+// ISSO JÁ ESTÁ CORRETO (metadata já salva event_id)
+// ============================================
+
+// ============================================
+// ✅ PRONTO! Salve o arquivo
+// ============================================
+
+// Após salvar, teste:
+// 1. Acesse /e/casamento-testee
+// 2. Tire uma foto
+// 3. O layout da foto deve mostrar os nomes personalizados
+// 4. A foto deve ter event_id no banco de dados

@@ -1,0 +1,11 @@
+.env
+.env.*
+*.local
+*.sql
+CODE_REVIEW.md
+ENV_VARS.md
+PATCH-CAMERA.txt
+REMOVER-AMARELO.md
+SECURITY_CHECKLIST.md
+README.md
+supabase/

@@ -63,30 +63,30 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Paleta personalizada verde oliva moderna
-				olive: {
-					50: '#f5f7f2',
-					100: '#eaf0e3',
-					200: '#d4e1c7',
-					300: '#bdd2a8',
-					400: '#b4c185',
-					500: '#98a665',
-					600: '#7d8a4e',
-					700: '#636c3f',
-					800: '#4b553a',
-					900: '#293018',
+				// Modern pink/magenta palette
+				rose: {
+					50: '#fff1f2',
+					100: '#ffe4e6',
+					200: '#fecdd3',
+					300: '#fda4af',
+					400: '#fb7185',
+					500: '#f43f5e',
+					600: '#e11d48',
+					700: '#be123c',
+					800: '#9f1239',
+					900: '#881337',
 				},
-				sage: {
-					50: '#f4f6f2',
-					100: '#e8ede3',
-					200: '#d2dcc7',
-					300: '#bccab0',
-					400: '#a8b588',
-					500: '#8a9865',
-					600: '#6d7a4e',
-					700: '#556040',
-					800: '#464e36',
-					900: '#3a412f',
+				pink: {
+					50: '#fdf2f8',
+					100: '#fce7f3',
+					200: '#fbcfe8',
+					300: '#f9a8d4',
+					400: '#f472b6',
+					500: '#ec4899',
+					600: '#db2777',
+					700: '#be185d',
+					800: '#9d174d',
+					900: '#831843',
 				}
 			},
 			borderRadius: {

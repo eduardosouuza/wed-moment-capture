@@ -1,176 +1,190 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* ============================================
+   LUME — CLEAN BENTO BORDER-RADIUS DESIGN SYSTEM
+   Baseado no Memoly (memoly.com.br)
+   Font: Plus Jakarta Sans
+   Background: #F8F9FA (Very light gray/off-white)
+   Cards: #FFFFFF
+   Primary: Rose/Coral (#E85A70)
+   Text: Deep Charcoal (#2B2B2F)
+   ============================================ */
 
 @layer base {
   :root {
-    --background: 241 244 232;
-    --foreground: 41 47 31;
+    --background: 248 249 250; /* #F8F9FA */
+    --foreground: 43 43 47;    /* #2B2B2F */
 
-    --card: 252 252 249;
-    --card-foreground: 41 47 31;
+    --card: 255 255 255;
+    --card-foreground: 43 43 47;
 
-    --popover: 252 252 249;
-    --popover-foreground: 41 47 31;
+    --popover: 255 255 255;
+    --popover-foreground: 43 43 47;
 
-    --primary: 75 85 58;
-    --primary-foreground: 248 250 245;
+    --primary: 232 90 112;     /* #E85A70 (Rose Memoly) */
+    --primary-foreground: 255 255 255;
 
-    --secondary: 230 235 220;
-    --secondary-foreground: 60 68 45;
+    --secondary: 246 243 241;  /* #F6F3F1 */
+    --secondary-foreground: 43 43 47;
 
-    --muted: 240 243 232;
-    --muted-foreground: 120 135 95;
+    --muted: 249 250 251;
+    --muted-foreground: 113 113 122; /* #71717A */
 
-    --accent: 240 243 232;
-    --accent-foreground: 60 68 45;
+    --accent: 225 29 72;       /* #E11D48 */
+    --accent-foreground: 255 255 255;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
 
-    --border: 210 220 195;
-    --input: 210 220 195;
-    --ring: 75 85 58;
+    --border: 237 231 228;     /* #EDE7E4 */
+    --input: 237 231 228;
+    --ring: 232 90 112;
 
-    --radius: 0.75rem;
+    --radius: 1.5rem;          /* 24px default para cards grandes */
 
-    --sidebar-background: 252 252 249;
-    --sidebar-foreground: 41 47 31;
-    --sidebar-primary: 75 85 58;
-    --sidebar-primary-foreground: 248 250 245;
-    --sidebar-accent: 230 235 220;
-    --sidebar-accent-foreground: 60 68 45;
-    --sidebar-border: 210 220 195;
-    --sidebar-ring: 75 85 58;
+    --sidebar-background: 255 255 255;
+    --sidebar-foreground: 43 43 47;
+    --sidebar-primary: 232 90 112;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 246 243 241;
+    --sidebar-accent-foreground: 43 43 47;
+    --sidebar-border: 237 231 228;
+    --sidebar-ring: 232 90 112;
   }
 
   .dark {
-    --background: 30 34 24;
-    --foreground: 248 250 245;
+    /* Mesmo se o usuário pedir dark mode, o design Memoly é focado no claro. 
+       Mantendo um fallback escuro suave caso necessário. */
+    --background: 24 24 27;    /* #18181B */
+    --foreground: 250 250 250;
 
-    --card: 30 34 24;
-    --card-foreground: 248 250 245;
+    --card: 39 39 42;          /* #27272A */
+    --card-foreground: 250 250 250;
 
-    --popover: 30 34 24;
-    --popover-foreground: 248 250 245;
+    --primary: 232 90 112;
+    --primary-foreground: 255 255 255;
 
-    --primary: 120 135 95;
-    --primary-foreground: 30 34 24;
-
-    --secondary: 50 57 38;
-    --secondary-foreground: 248 250 245;
-
-    --muted: 50 57 38;
-    --muted-foreground: 120 135 95;
-
-    --accent: 50 57 38;
-    --accent-foreground: 248 250 245;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 50 57 38;
-    --input: 50 57 38;
-    --ring: 120 135 95;
-
-    --sidebar-background: 30 34 24;
-    --sidebar-foreground: 248 250 245;
-    --sidebar-primary: 120 135 95;
-    --sidebar-primary-foreground: 30 34 24;
-    --sidebar-accent: 50 57 38;
-    --sidebar-accent-foreground: 248 250 245;
-    --sidebar-border: 50 57 38;
-    --sidebar-ring: 120 135 95;
+    --border: 63 63 70;
+    --input: 63 63 70;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    /* Garantir que não apareça cor amarela no iPhone */
-    background-color: rgb(var(--background));
+    @apply bg-background text-foreground;
+    background-color: #F8F9FA; /* Garante safe-area correta no iOS */
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Adicionando grid suave ao fundo imitando o design clean do Memoly */
+    background-image:
+      linear-gradient(rgba(237, 231, 228, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237, 231, 228, 0.4) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
 
-  /* Configurações específicas para iPhone/Safari */
-  @supports (padding: max(0px)) {
-    body {
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-      background-color: rgb(var(--background));
-    }
-  }
-
-  #root {
-    background-color: rgb(var(--background));
-    min-height: 100vh;
-    min-height: 100dvh;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #1c1c1e;
   }
 }
 
-@layer components {
-  .gradient-shimmer {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(75, 85, 58, 0.4),
-      transparent
-    );
-    background-size: 200% 100%;
-  }
-  
-  .romantic-glow {
-    box-shadow: 0 0 20px rgba(75, 85, 58, 0.3);
-  }
-  
-  .glass-effect {
-    backdrop-filter: blur(10px);
-    background: rgba(252, 252, 249, 0.8);
-    border: 1px solid rgba(75, 85, 58, 0.2);
-  }
-
-  .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-4 px-6 rounded-xl shadow-lg transition-all duration-150;
-  }
-
-  .card-elegant {
-    @apply bg-card border border-border rounded-2xl shadow-lg p-6;
-  }
-
-  .text-brand {
-    color: rgb(var(--olive-green-medium));
-  }
-
-  .icon-sparkles {
-    color: rgb(var(--olive-green-medium));
-  }
+/* Remover autofill background */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #2b2b2f !important;
 }
 
 @layer utilities {
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-6px); }
-  }
-  
-  @keyframes scale-in {
-    0% { transform: scale(0.95); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .animate-scale-in {
-    animation: scale-in 0.5s ease-out forwards;
-  }
+  .text-balance { text-wrap: balance; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: #E85A70; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #BE123C; }
+::-webkit-scrollbar-horizontal { display: none; }
+html { scrollbar-width: thin; scrollbar-color: #E85A70 #F8F9FA; }
+
+/* ===== TRANSITIONS ===== */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-duration: 300ms;
+}
+*:focus-visible { outline: 2px solid #E85A70; outline-offset: 2px; }
+
+/* ===== LENIS COMPAT ======= */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* ===== BENTO CARDS (MEMOLY STYLE) ===== */
+.bento-card {
+  background: #ffffff;
+  border: 1px solid #ede7e4;
+  border-radius: 32px; /* Raio bem grande padrão do memoly */
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.bento-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(232, 90, 112, 0.12);
+  border-color: rgba(232, 90, 112, 0.25);
+}
+
+/* ===== BOTÕES MEMOLY ===== */
+.btn-rose {
+  background-color: #E85A70;
+  color: white;
+  border-radius: 14px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.btn-rose:hover {
+  background-color: #BE123C;
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background-color: #F6F3F1;
+  color: #2b2b2f;
+  border-radius: 14px;
+  font-weight: 600;
+  border: 1px solid #ede7e4;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background-color: #ede7e4;
+}
+
+/* ===== FONT UTILITY ===== */
+.font-display {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+/* ===== BADGE NUMÉRICA (MEMOLY STYLE) ===== */
+.badge-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FDF2F4;
+  color: #E85A70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid rgba(232, 90, 112, 0.2);
 }
