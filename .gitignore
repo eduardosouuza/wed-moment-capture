@@ -1,10 +1,38 @@
-# Environment variables
+# ─── Environment & Secrets ───────────────────────────────────────────────────
 .env
 .env.*
+.env.local
+.env.*.local
 !.env.example
 
-# Logs
-logs
+# Nunca commitar chaves/secrets mesmo se nomeados de outra forma
+*secret*
+*secrets*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ─── Dependências ────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ─── Build ───────────────────────────────────────────────────────────────────
+dist/
+dist-ssr/
+build/
+out/
+.output/
+
+# ─── Cache & Temporários ─────────────────────────────────────────────────────
+.cache/
+.parcel-cache/
+.turbo/
+*.local
+
+# ─── Logs ────────────────────────────────────────────────────────────────────
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -12,19 +40,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ─── Vercel ──────────────────────────────────────────────────────────────────
+.vercel/
 
-# Editor directories and files
+# ─── Editores & IDEs ─────────────────────────────────────────────────────────
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.vercel
+
+# ─── OS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
