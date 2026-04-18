@@ -1,96 +1,87 @@
 /**
- * ThemeTransition — GSAP edition
+ * ThemeTransition — GSAP circular reveal ("paint fill")
  *
- * Three-layer animation on theme switch:
- *  1. A "flash" layer: instant color fill that fades immediately (snap feel)
- *  2. A "ripple" layer: circle expands from swatch origin with elastic easing
- *  3. Subtle page-wide brightness pulse on <body>
- *
- * Triggered by the 'lume:theme' custom event from useThemeAccent.
+ * Ao trocar o tema:
+ *   1. Um círculo colorido cresce do swatch até cobrir TODA a tela (power3.inOut)
+ *   2. Pausa 80ms com a tela coberta (tema já aplicado por baixo)
+ *   3. O círculo recua de volta para o ponto de origem (expo.inOut)
+ *   → O site aparece com a nova cor como se o círculo tivesse "pintado" tudo
  */
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 export function ThemeTransition() {
-  const rippleRef = useRef<HTMLDivElement>(null);
-  const flashRef  = useRef<HTMLDivElement>(null);
+  const circleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (e: Event) => {
       const { x, y, color } = (e as CustomEvent<{ x: number; y: number; color: string }>).detail;
-      const ripple = rippleRef.current;
-      const flash  = flashRef.current;
-      if (!ripple || !flash) return;
+      const el = circleRef.current;
+      if (!el) return;
 
-      // Kill any in-progress animations to avoid overlap
-      gsap.killTweensOf([ripple, flash, document.body]);
+      gsap.killTweensOf(el);
 
-      /* ── 1. Flash layer ─────────────────────────────────────────── */
-      gsap.set(flash, { backgroundColor: color, opacity: 0.18 });
-      gsap.to(flash, {
-        opacity: 0,
-        duration: 0.45,
-        ease: 'power2.out',
-      });
-
-      /* ── 2. Ripple circle from click origin ─────────────────────── */
-      // Calculate the radius needed to cover the entire viewport from (x, y)
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const maxR = Math.ceil(
+
+      // Raio necessário para cobrir o viewport inteiro a partir de (x, y)
+      const maxRadius = Math.ceil(
         Math.sqrt(
           Math.pow(Math.max(x, vw - x), 2) +
           Math.pow(Math.max(y, vh - y), 2)
         )
-      ) * 2; // diameter as px
+      );
+      const maxDiam = maxRadius * 2.1;
 
-      gsap.set(ripple, {
+      // Posiciona o círculo exatamente no ponto de clique, tamanho zero
+      gsap.set(el, {
+        display: 'block',
         backgroundColor: color,
         width: 0,
         height: 0,
-        borderRadius: '50%',
-        x: x,
-        y: y,
+        x,
+        y,
         xPercent: -50,
         yPercent: -50,
-        opacity: 0.30,
+        borderRadius: '50%',
+        opacity: 1,
       });
 
-      gsap.timeline()
-        .to(ripple, {
-          width: maxR,
-          height: maxR,
-          opacity: 0.22,
-          duration: 0.55,
-          ease: 'power3.out',
+      gsap.timeline({
+        onComplete: () => {
+          // Reset discreto depois que o círculo voltou ao ponto de origem
+          gsap.set(el, { display: 'none', width: 0, height: 0, opacity: 0 });
+        },
+      })
+        // ── Fase 1: Cresce do swatch até cobrir a tela ──────────────
+        .to(el, {
+          width: maxDiam,
+          height: maxDiam,
+          duration: 0.52,
+          ease: 'power3.inOut',
         })
-        .to(ripple, {
-          opacity: 0,
-          duration: 0.30,
-          ease: 'power1.in',
+        // ── Pausa breve — tema já está aplicado por baixo ───────────
+        .to(el, { duration: 0.08 })
+        // ── Fase 2: Recua de volta para a origem ────────────────────
+        .to(el, {
+          width: 0,
+          height: 0,
+          duration: 0.48,
+          ease: 'expo.inOut',
         });
 
-      /* ── 3. Subtle brightness pulse on body ──────────────────────── */
-      gsap.timeline()
-        .to(document.body, {
-          filter: 'brightness(1.04)',
-          duration: 0.12,
-          ease: 'power1.out',
-        })
-        .to(document.body, {
-          filter: 'brightness(1)',
-          duration: 0.35,
-          ease: 'power2.inOut',
-        });
-
-      /* ── 4. Swetch scale pop ─────────────────────────────────────── */
-      // Find the active swatch button and give it a satisfying pop
+      /* Pulse suave no swatch clicado */
       const btn = document.querySelector(`[data-swatch="${color}"]`) as HTMLElement | null;
       if (btn) {
         gsap.timeline()
-          .to(btn, { scale: 1.5, duration: 0.12, ease: 'back.out(3)' })
-          .to(btn, { scale: 1.25, duration: 0.25, ease: 'elastic.out(1.2, 0.5)' });
+          .to(btn, { scale: 1.6, duration: 0.14, ease: 'back.out(3)' })
+          .to(btn, { scale: 1.28, duration: 0.3, ease: 'elastic.out(1.1, 0.5)' });
       }
+
+      /* Shimmer suave no body */
+      gsap.timeline()
+        .to(document.body, { filter: 'brightness(1.05)', duration: 0.15, ease: 'power1.out' })
+        .to(document.body, { filter: 'brightness(1)', duration: 0.4, ease: 'power2.inOut' });
     };
 
     window.addEventListener('lume:theme', handler);
@@ -98,28 +89,19 @@ export function ThemeTransition() {
   }, []);
 
   return (
-    <>
-      {/* Flash — full screen instant fade */}
-      <div
-        ref={flashRef}
-        style={{
-          position: 'fixed', inset: 0,
-          pointerEvents: 'none', zIndex: 9998,
-          opacity: 0,
-        }}
-      />
-      {/* Ripple — circle from swatch origin */}
-      <div
-        ref={rippleRef}
-        style={{
-          position: 'fixed', top: 0, left: 0,
-          pointerEvents: 'none', zIndex: 9999,
-          width: 0, height: 0,
-          borderRadius: '50%',
-          opacity: 0,
-          transformOrigin: 'center center',
-        }}
-      />
-    </>
+    <div
+      ref={circleRef}
+      style={{
+        display: 'none',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        zIndex: 9999,
+        borderRadius: '50%',
+        opacity: 0,
+        willChange: 'width, height, transform',
+      }}
+    />
   );
 }
