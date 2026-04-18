@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Smartphone, Images, CheckCircle2, Wifi, Camera, Tv, Users } from 'lucide-react';
 
@@ -15,6 +16,26 @@ const PHOTO_GRID = [
 
 export function VisualDemoSection() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.08 });
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // iOS Safari requires a programmatic .play() call — autoPlay alone is not enough
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.playsInline = true;
+    const tryPlay = () => {
+      video.play().catch(() => {
+        // silently ignore: user gesture may be needed on some devices
+      });
+    };
+    // Try immediately
+    tryPlay();
+    // Also try on first user interaction (covers strict iOS policy)
+    const onInteraction = () => { tryPlay(); document.removeEventListener('touchstart', onInteraction); };
+    document.addEventListener('touchstart', onInteraction, { once: true });
+    return () => document.removeEventListener('touchstart', onInteraction);
+  }, []);
 
   return (
     <section id="demo" ref={ref} className="py-28 px-4 sm:px-6 lg:px-8 bg-[#F8F9FA]">
@@ -80,8 +101,16 @@ export function VisualDemoSection() {
                   <div className="absolute top-2 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-black rounded-full z-20" />
                   {/* Glare */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.06] to-white/0 z-20 pointer-events-none" />
-                  <video src="/tutorial cabine de fotos.mp4" autoPlay loop muted playsInline poster="/cabine-foto.png"
-                    className="w-full h-full object-cover bg-black" />
+                  <video
+                    ref={videoRef}
+                    src="/tutorial%20cabine%20de%20fotos.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster="/cabine-foto.png"
+                    className="w-full h-full object-cover bg-black"
+                  />
                 </div>
 
                 {/* Bottom detail chips */}
