@@ -3,12 +3,12 @@ import { Smartphone, Images, CheckCircle2, Wifi, Camera, Tv, Users } from 'lucid
 
 // Tiras de fotos da cabine — variedade de aspect ratios para grade rica
 const PHOTO_GRID = [
-  { src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=800&fit=crop&q=80', span: 'row-span-2', aspect: 'aspect-[3/4]' },
-  { src: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop&q=80', span: '', aspect: 'aspect-[4/3]' },
-  { src: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&h=400&fit=crop&q=80', span: '', aspect: 'aspect-[4/3]' },
-  { src: 'https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?w=600&h=400&fit=crop&q=80', span: '', aspect: 'aspect-[4/3]' },
-  { src: 'https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=600&h=800&fit=crop&q=80', span: 'row-span-2', aspect: 'aspect-[3/4]' },
-  { src: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&h=400&fit=crop&q=80', span: '', aspect: 'aspect-[4/3]' },
+  { src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=800&fit=crop&q=60&auto=format', span: 'row-span-2', aspect: 'aspect-[3/4]', width: 600, height: 800 },
+  { src: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=450&fit=crop&q=60&auto=format', span: '', aspect: 'aspect-[4/3]', width: 600, height: 450 },
+  { src: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&h=450&fit=crop&q=60&auto=format', span: '', aspect: 'aspect-[4/3]', width: 600, height: 450 },
+  { src: 'https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?w=600&h=450&fit=crop&q=60&auto=format', span: '', aspect: 'aspect-[4/3]', width: 600, height: 450 },
+  { src: 'https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=600&h=800&fit=crop&q=60&auto=format', span: 'row-span-2', aspect: 'aspect-[3/4]', width: 600, height: 800 },
+  { src: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&h=450&fit=crop&q=60&auto=format', span: '', aspect: 'aspect-[4/3]', width: 600, height: 450 },
 ];
 
 
@@ -80,7 +80,7 @@ export function VisualDemoSection() {
                   <div className="absolute top-2 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-black rounded-full z-20" />
                   {/* Glare */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.06] to-white/0 z-20 pointer-events-none" />
-                  <video src="/tutorial cabine de fotos.mp4" autoPlay loop muted playsInline
+                  <video src="/tutorial cabine de fotos.mp4" autoPlay loop muted playsInline poster="/cabine-foto.png"
                     className="w-full h-full object-cover bg-black" />
                 </div>
 
@@ -374,6 +374,8 @@ export function VisualDemoSection() {
                           alt=""
                           className="w-full h-full object-cover"
                           style={{ minHeight: 90 }}
+                          width={photo.width}
+                          height={photo.height}
                           loading="lazy"
                         />
                         {/* Overlay sutil com gradiente */}

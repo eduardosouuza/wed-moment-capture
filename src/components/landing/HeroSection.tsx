@@ -106,9 +106,9 @@ export function HeroSection() {
                   style={{ width: 76, transform: 'rotate(-4deg) translateY(10px)' }}
                 >
                   <div className="flex flex-col gap-[3px] p-[4px] pb-0">
-                    <img src="/cabine-foto.png" className="w-full rounded-sm object-cover object-top" style={{ height: 58 }} alt="" />
-                    <img src="/cabine-foto.png" className="w-full rounded-sm object-cover" style={{ height: 58, objectPosition: '50% 45%' }} alt="" />
-                    <img src="/cabine-foto.png" className="w-full rounded-sm object-cover object-bottom" style={{ height: 58 }} alt="" />
+                    <img src="/cabine-foto.png" width={66} height={58} className="w-full rounded-sm object-cover object-top" style={{ height: 58 }} alt="" loading="lazy" />
+                    <img src="/cabine-foto.png" width={66} height={58} className="w-full rounded-sm object-cover" style={{ height: 58, objectPosition: '50% 45%' }} alt="" loading="lazy" />
+                    <img src="/cabine-foto.png" width={66} height={58} className="w-full rounded-sm object-cover object-bottom" style={{ height: 58 }} alt="" loading="lazy" />
                   </div>
                   <div className="py-1.5 text-center">
                     <p className="text-[7px] font-bold text-[#1c1c1e]">Ana & Rafael</p>
@@ -126,6 +126,10 @@ export function HeroSection() {
                     alt="Casal feliz usando a cabine de fotos"
                     className="w-full block"
                     style={{ maxHeight: 310, objectFit: 'cover', objectPosition: 'top' }}
+                    width={136}
+                    height={310}
+                    loading="eager"
+                    fetchPriority="high"
                   />
                 </div>
 
@@ -135,9 +139,9 @@ export function HeroSection() {
                   style={{ width: 76, transform: 'rotate(4deg) translateY(10px)' }}
                 >
                   <div className="flex flex-col gap-[3px] p-[4px] pb-0">
-                    <img src="/cabine-foto.png" className="w-full rounded-sm object-cover object-top" style={{ height: 58 }} alt="" />
-                    <img src="/cabine-foto.png" className="w-full rounded-sm object-cover" style={{ height: 58, objectPosition: '50% 45%' }} alt="" />
-                    <img src="/cabine-foto.png" className="w-full rounded-sm object-cover object-bottom" style={{ height: 58 }} alt="" />
+                    <img src="/cabine-foto.png" width={66} height={58} className="w-full rounded-sm object-cover object-top" style={{ height: 58 }} alt="" loading="lazy" />
+                    <img src="/cabine-foto.png" width={66} height={58} className="w-full rounded-sm object-cover" style={{ height: 58, objectPosition: '50% 45%' }} alt="" loading="lazy" />
+                    <img src="/cabine-foto.png" width={66} height={58} className="w-full rounded-sm object-cover object-bottom" style={{ height: 58 }} alt="" loading="lazy" />
                   </div>
                   <div className="py-1.5 text-center">
                     <p className="text-[7px] font-bold text-[#1c1c1e]">Sofia & Lucas</p>
@@ -183,7 +187,7 @@ export function HeroSection() {
               >
                 <div className="flex -space-x-2 shrink-0">
                   {event.avatars.map((imgId, i) => (
-                    <img key={i} src={`https://i.pravatar.cc/100?img=${imgId}`} alt="Guest" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
+                    <img key={i} src={`https://i.pravatar.cc/100?img=${imgId}`} width={36} height={36} alt="Guest" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" loading="lazy" />
                   ))}
                   <div className="w-9 h-9 rounded-full border-2 border-white bg-[#F8F9FA] flex items-center justify-center text-[10px] font-bold text-gray-500 shadow-sm">
                     +{event.extra}
