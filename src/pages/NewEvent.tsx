@@ -239,36 +239,36 @@ export default function NewEvent() {
     const progressValue = (step / 3) * 100;
 
     return (
-        <div ref={containerRef} className="min-h-screen bg-[#F8F9FA] dark:bg-[#0a0a0b] transition-colors duration-300 pb-20">
-            {/* Header */}
-            <header className="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-[#ede7e4] dark:border-white/10 sticky top-0 z-20 header-animate">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => navigate('/dashboard')}
-                                className="text-gray-500 hover:text-[#1c1c1e] dark:hover:text-white dark:hover:bg-white/5 -ml-2"
-                            >
-                                <ArrowLeft className="w-4 h-4 mr-1.5" />
-                                Voltar
-                            </Button>
-                            <div className="w-px h-5 bg-[#ede7e4] dark:bg-white/10" />
-                            <div>
-                                <HeaderTitle />
+        <Form {...form}>
+            <div ref={containerRef} className="min-h-screen bg-[#F8F9FA] dark:bg-[#0a0a0b] transition-colors duration-300 pb-20">
+                {/* Header */}
+                <header className="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-[#ede7e4] dark:border-white/10 sticky top-0 z-20 header-animate">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => navigate('/dashboard')}
+                                    className="text-gray-500 hover:text-[#1c1c1e] dark:hover:text-white dark:hover:bg-white/5 -ml-2"
+                                >
+                                    <ArrowLeft className="w-4 h-4 mr-1.5" />
+                                    Voltar
+                                </Button>
+                                <div className="w-px h-5 bg-[#ede7e4] dark:bg-white/10" />
+                                <div>
+                                    <HeaderTitle />
+                                </div>
                             </div>
+                            <Badge variant="outline" className="font-bold border-[#E85A70]/20 text-[#E85A70] rounded-full px-4">
+                                Passo {step} de 3
+                            </Badge>
                         </div>
-                        <Badge variant="outline" className="font-bold border-[#E85A70]/20 text-[#E85A70] rounded-full px-4">
-                            Passo {step} de 3
-                        </Badge>
+                        <Progress value={progressValue} className="h-1 mt-4 bg-[#FDF2F4] dark:bg-white/5" />
                     </div>
-                    <Progress value={progressValue} className="h-1 mt-4 bg-[#FDF2F4] dark:bg-white/5" />
-                </div>
-            </header>
+                </header>
 
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-                <Form {...form}>
+                <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <SlugAutoGenerator />
                         {error && (
@@ -353,8 +353,8 @@ export default function NewEvent() {
                             </div>
                         </div>
                     </form>
-                </Form>
-            </main>
-        </div>
+                </main>
+            </div>
+        </Form>
     );
 }
