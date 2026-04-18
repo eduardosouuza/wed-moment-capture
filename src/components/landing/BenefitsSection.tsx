@@ -8,10 +8,13 @@ export function BenefitsSection() {
   const { active, themes, setTheme } = useThemeAccent();
   const [ripple, setRipple] = useState<string | null>(null);
 
-  const handleSwatch = (theme: typeof themes[0]) => {
-    setTheme(theme);
+  const handleSwatch = (theme: typeof themes[0], e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    setTheme(theme, x, y);
     setRipple(theme.id);
-    setTimeout(() => setRipple(null), 600);
+    setTimeout(() => setRipple(null), 700);
   };
 
   const anim = () =>
@@ -156,7 +159,7 @@ export function BenefitsSection() {
                       <button
                         key={theme.id}
                         title={theme.label}
-                        onClick={() => handleSwatch(theme)}
+                        onClick={(e) => handleSwatch(theme, e)}
                         className="relative w-8 h-8 rounded-full border-2 border-white shadow-md cursor-pointer focus:outline-none overflow-hidden"
                         style={{
                           background: theme.color,

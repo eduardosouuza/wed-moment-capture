@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, ProtectedRoute, AdminRoute } from "@/hooks/useAuth";
+import { ThemeTransition } from "@/components/ThemeTransition";
 
 // Landing page carrega eagerly (primeira coisa que o usuário vê)
 import Index from "./pages/Index";
@@ -50,6 +51,7 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthProvider>
+          <ThemeTransition />
           <Toaster />
           <Sonner />
           <BrowserRouter>

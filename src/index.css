@@ -163,7 +163,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--lume-accent, #E85A70) #F8F9
   transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   transition-duration: 300ms;
 }
-*:focus-visible { outline: 2px solid #E85A70; outline-offset: 2px; }
+*:focus-visible { outline: 2px solid var(--lume-accent, #E85A70); outline-offset: 2px; }
 
 /* ===== LENIS COMPAT ======= */
 html.lenis { height: auto; }
@@ -229,4 +229,38 @@ html.lenis { height: auto; }
   font-weight: 700;
   font-size: 14px;
   border: 1px solid rgba(232, 90, 112, 0.2);
+}
+
+/* ===== BADGE ROSE ===== */
+.badge-rose {
+  background-color: rgba(232, 90, 112, 0.10);
+  color: #E85A70;
+  border: 1px solid rgba(232, 90, 112, 0.20);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background-color: rgba(232, 90, 112, 0.22);
+  color: inherit;
+}
+
+/* ===== THEME RIPPLE OVERLAY ===== */
+.lume-ripple-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  clip-path: circle(0% at var(--rx, 50%) var(--ry, 50%));
+  opacity: 0;
+  will-change: clip-path, opacity;
+}
+
+.lume-ripple-overlay.lume-ripple-active {
+  animation: lume-ripple 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lume-ripple {
+  0%   { clip-path: circle(0%    at var(--rx, 50%) var(--ry, 50%)); opacity: 0.38; }
+  55%  { clip-path: circle(100%  at var(--rx, 50%) var(--ry, 50%)); opacity: 0.18; }
+  100% { clip-path: circle(150%  at var(--rx, 50%) var(--ry, 50%)); opacity: 0;    }
 }
