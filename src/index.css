@@ -53,6 +53,11 @@
     --sidebar-accent-foreground: 240 5% 18%;
     --sidebar-border: 24 22% 91%;
     --sidebar-ring: 349 76% 63%;
+
+    /* ── Lume accent theme — driven by swatch click ── */
+    --lume-accent: #E85A70;
+    --lume-accent-light: rgba(232, 90, 112, 0.12);
+    --lume-accent-ring: rgba(232, 90, 112, 0.25);
   }
 
   .dark {
@@ -147,10 +152,10 @@ select:-webkit-autofill:focus {
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: #E85A70; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #BE123C; }
+::-webkit-scrollbar-thumb { background: var(--lume-accent, #E85A70); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--lume-scrollbar, #BE123C); }
 ::-webkit-scrollbar-horizontal { display: none; }
-html { scrollbar-width: thin; scrollbar-color: #E85A70 #F8F9FA; }
+html { scrollbar-width: thin; scrollbar-color: var(--lume-accent, #E85A70) #F8F9FA; }
 
 /* ===== TRANSITIONS ===== */
 * {
@@ -175,20 +180,20 @@ html.lenis { height: auto; }
 
 .bento-card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px rgba(232, 90, 112, 0.12);
-  border-color: rgba(232, 90, 112, 0.25);
+  box-shadow: 0 20px 40px -12px var(--lume-accent-ring, rgba(232, 90, 112, 0.25));
+  border-color: var(--lume-accent-ring, rgba(232, 90, 112, 0.25));
 }
 
 /* ===== BOTÕES MEMOLY ===== */
 .btn-rose {
-  background-color: #E85A70;
+  background-color: var(--lume-accent, #E85A70);
   color: white;
   border-radius: 14px;
   font-weight: 700;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 .btn-rose:hover {
-  background-color: #BE123C;
+  filter: brightness(0.88);
   transform: scale(1.02);
 }
 
