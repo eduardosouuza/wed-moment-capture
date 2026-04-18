@@ -12,22 +12,22 @@
 ## 🚀 **Funcionalidades**
 
 ### **Para Clientes (Criadores de Eventos)**
-- ✅ Criar e gerenciar eventos personalizados
-- ✅ Escolher entre 6 temas de cores
-- ✅ QR Code automático para cada evento
-- ✅ Copiar link do evento com um clique
-- ✅ Dashboard com estatísticas em tempo real
-- ✅ Editar eventos existentes
-- ✅ Indicadores de limite de uso e plano
+- ✅ Criar eventos via Stepper intuitivo de 3 passos.
+- ✅ Escolher entre **8 temas** de cores dinâmicos.
+- ✅ QR Code personalizável (cores, logo, nível de correção).
+- ✅ Copiar link do evento com um clique.
+- ✅ Dashboard com estatísticas em tempo real.
+- ✅ Editar eventos via interface organizada em abas (Geral, Aparência, QR Code).
+- ✅ Validação robusta de dados em todos os formulários.
 
 ### **Para Convidados (Usuários Finais)**
-- ✅ Acesso via link público (`/e/:slug`)
-- ✅ Captura de fotos sequenciais (3 fotos com countdown)
-- ✅ Gravação de vídeos (15 segundos)
-- ✅ Galeria em tempo real (auto-refresh 5s)
-- ✅ Download de fotos/vídeos
-- ✅ Interface responsiva (Mobile/Desktop)
-- ✅ Temas dinâmicos por evento
+- ✅ Acesso via link público (`/e/:slug`).
+- ✅ Captura de fotos sequenciais (com countdown e layouts).
+- ✅ Gravação de vídeos (se habilitado).
+- ✅ Galeria em tempo real com Realtime WebSocket.
+- ✅ Download de mídias e compartilhamento.
+- ✅ Interface 100% responsiva (Mobile-First).
+- ✅ Temas dinâmicos aplicados instantaneamente.
 
 ### **Para Administradores**
 - ✅ Painel admin completo (`/admin`)
@@ -134,14 +134,16 @@ src/
 
 ### **Paletas Disponíveis**
 
-| Tema | Emoji | Cor Principal |
-|------|-------|---------------|
-| Roxo Elegante | 🟣 | `#8B5CF6` |
-| Azul Oceano | 🔵 | `#3B82F6` |
-| Rosa Romântico | 💗 | `#EC4899` |
-| Verde Natural | 🟢 | `#10B981` |
-| Laranja Vibrante | 🟠 | `#F97316` |
-| Vermelho Paixão | 🔴 | `#EF4444` |
+| Tema | Emoji | ID | Uso |
+|------|-------|----|-----|
+| Rosa Romântico | 🌹 | `rose` | Casamentos e 15 anos |
+| Azul Oceano | 🌊 | `ocean` | Corporativo e Formaturas |
+| Roxo Elegante | 🟣 | `purple` | Baladas e Eventos Mix |
+| Azul Celeste | 🔵 | `blue` | Batizados e Infantis |
+| Pink Vibrante | 💗 | `pink` | Aniversários Femininos |
+| Verde Natural | 🟢 | `green` | Eventos Externos |
+| Laranja Vibrante | 🟠 | `orange` | Promoções e Lançamentos |
+| Vermelho Paixão | 🔴 | `red` | Festas Temáticas |
 
 ### **Como Funciona**
 

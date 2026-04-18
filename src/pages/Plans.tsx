@@ -30,7 +30,8 @@ const plans: Plan[] = [
         accentBg: 'bg-blue-50',
         buttonStyle: 'bg-gray-900 hover:bg-gray-800 text-white',
         features: [
-            '100 Fotos por evento',
+            '30 Fotos por evento',
+            'Apenas fotos (sem vídeo)',
             '1 evento ativo',
             'QR Code personalizado',
             'Temas básicos',

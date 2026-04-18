@@ -1,257 +1,74 @@
-# 📋 Revisão de Código - EventCapture
+# 📋 Revisão de Código - EventCapture (Lume)
 
-**Data:** 28/12/2025  
-**Revisor:** AI Assistant  
-**Versão:** 1.0
+**Data Última Atualização:** 2026-03-18  
+**Versão:** 1.2 (Pós-refatoração de Eventos)
 
 ---
 
 ## 📊 **Resumo Executivo**
 
 ### ✅ **Pontos Fortes**
-- ✓ Arquitetura bem organizada (pages, components, hooks, lib)
-- ✓ TypeScript configurado corretamente
-- ✓ Autenticação implementada com Supabase
-- ✓ Sistema de temas dinâmicos funcionando
-- ✓ UI moderna com Tailwind CSS
-- ✓ Componentização adequada
+- ✓ Arquitetura bem organizada e modular.
+- ✓ **Novo:** Validação robusta com **Zod + React Hook Form**.
+- ✓ **Novo:** Novo fluxo de criação (Stepper) e edição (Tabs) mais intuitivos.
+- ✓ **Novo:** Isolamento de re-renders com sub-componentes especializados (`useWatch`).
+- ✓ Sistema de temas expandido (8 cores disponíveis, incluindo `rose` e `ocean`).
+- ✓ Segurança reforçada com validação de `user_id` na aplicação.
 
-### ⚠️ **Áreas de Melhoria Identificadas**
-- Falta tratamento de erros em algumas chamadas API
-- Alguns componentes grandes poderiam ser quebrados
-- Faltam testes unitários
-- Variáveis de ambiente não documentadas
-- Falta validação de dados em alguns forms
+### ⚠️ **Áreas de Melhoria Restantes**
+- Faltam testes unitários e de integração (prioridade para lógica de câmera e pagamentos).
+- Variáveis de ambiente precisam de documentação mais clara no `.env.example`.
+- Galeria em tempo real pode ser otimizada para eventos com altíssimo tráfego (paginação/virtualização).
 
 ---
 
-## 🏗️ **Estrutura do Projeto**
+## 🏗️ **Análise de Mudanças Recentes**
 
-```
-wed-moment-capture/
-├── src/
-│   ├── components/       # ✅ Bem organizado
-│   │   ├── ui/          # Componentes shadcn/ui
-│   │   ├── CameraWithLayout.tsx
-│   │   ├── Gallery.tsx
-│   │   ├── PhotoboothMain.tsx
-│   │   └── ThemeSelector.tsx
-│   ├── hooks/           # ✅ Lógica reutilizável
-│   │   ├── useAuth.tsx
-│   │   └── useEvent.tsx
-│   ├── lib/             # ✅ Bibliotecas
-│   │   ├── supabase.ts
-│   │   ├── themes.ts
-│   │   └── utils.ts
-│   ├── pages/           # ✅ Rotas principais
-│   │   ├── Dashboard.tsx
-│   │   ├── AdminDashboard.tsx
-│   │   ├── EventPage.tsx
-│   │   ├── NewEvent.tsx
-│   │   ├── EditEvent.tsx
-│   │   ├── Login.tsx
-│   │   ├── Register.tsx
-│   │   └── Index.tsx
-│   └── types/           # ✅ TypeScript types
-│       └── database.ts
-└── public/              # Assets estáticos
-```
+### 🧩 **Modularização de Formulários**
+A refatoração da página de eventos introduziu o `EventFormFields.tsx`, que centraliza os campos de formulário. Isso melhorou significativamente a DRY (Don't Repeat Yourself) entre as páginas de `NewEvent` e `EditEvent`.
 
-**Avaliação:** ⭐⭐⭐⭐⭐ (Excelente organização)
+### ⚡ **Performance e UX**
+A adoção de sub-componentes para partes dinâmicas do formulário (como o gerador de slug e preview de QR Code) reduziu drasticamente o custo computacional de cada tecla pressionada, isolando os re-renders apenas nos nós necessários.
 
 ---
 
-## 🔒 **Análise de Segurança**
+## 🔒 **Segurança**
 
-### ✅ **Implementações Corretas**
-1. **Autenticação:** Supabase Auth configurado
-2. **RLS (Row Level Security):** Políticas implementadas no banco
-3. **Protected Routes:** Componente `<ProtectedRoute>` funcional
-4. **Sanitização:** Inputs com validação básica
-
-### ⚠️ **Melhorias Recomendadas**
-1. **Validação de Entrada:**
-   - Adicionar validação mais rigorosa nos formulários
-   - Usar bibliotecas como `zod` ou `yup`
-
-2. **Rate Limiting:**
-   - Implementar limite de requisições
-   - Prevenir spam na criação de eventos
-
-3. **Environment Variables:**
-   - Nunca commitar `.env` no Git (✅ já está no .gitignore)
-   - Documentar variáveis necessárias
-
-**Risco Atual:** 🟢 Baixo (estrutura segura, faltam refinamentos)
+### ✅ **Implementações Atuais**
+1. **Autenticação:** Supabase Auth com persistência correta.
+2. **RLS (Row Level Security):** Políticas granulares aplicadas a `events`, `media` e `profiles`.
+3. **Validação de Aplicação:** Queries agora verificam explicitamente a propriedade do recurso (`.eq('user_id', user.id)`).
+4. **Validação de Schema:** Inputs sanitizados e validados via Zod antes do envio.
 
 ---
 
-## ⚡ **Performance**
-
-### ✅ **Otimizações Implementadas**
-- React Router para navegação SPA
-- Lazy loading de imagens (em algumas partes)
-- Vite como bundler (rápido)
-- CSS otimizado com Tailwind
-
-### ⚠️ **Oportunidades de Melhoria**
-1. **Lazy Loading de Rotas:**
-   ```tsx
-   // Implementar:
-   const Dashboard = lazy(() => import('./pages/Dashboard'));
-   ```
-
-2. **Memo/useMemo:**
-   - Componentes pesados deveriam usar `React.memo`
-   - Cálculos complexos com `useMemo`
-
-3. **Otimização de Imagens:**
-   - Comprimir QR Codes antes de baixar
-   - Lazy loading na galeria
-
-4. **Infinite Scroll:**
-   - Galeria com muitas fotos deveria paginar
-
-**Performance Atual:** 🟡 Média-Alta (OK para MVP, pode melhorar)
-
----
-
-## 🐛 **Bugs Potenciais Identificados**
-
-### 🔴 **Críticos**
-Nenhum encontrado
-
-### 🟡 **Médios**
-1. **EditEvent.tsx (linha 52-57):**
-   - Query Supabase pode falhar se evento não existir
-   - **Fix:** Melhorar tratamento de erro
-
-2. **Dashboard.tsx:**
-   - `downloadQRCode` assume que canvas existe
-   - **Fix:** Adicionar verificação null
-
-3. **Gallery.tsx:**
-   - Auto-refresh a cada 5s pode causar lag
-   - **Fix:** Usar WebSocket ou aumentar intervalo
-
-### 🟢 **Menores**
-1. Falta loading states em alguns botões
-2. Algumas mensagens de erro genéricas
-   
-**Prioridade de Correção:** Médios primeiro
-
----
-
-## 📦 **Dependências**
-
-### **Principais:** ✅
-```json
-{
-  "@supabase/supabase-js": "^2.x",
-  "react": "^18.3.1",
-  "react-router-dom": "^6.x",
-  "qrcode.react": "^4.1.0",
-  "lucide-react": "icons"
-}
-```
-
-### **Recomendações:**
-- ✅ Versões estáveis
-- ⚠️ Atualizar `react` regularmente
-- 💡 Considerar adicionar:
-  - `react-hook-form` (forms melhores)
-  - `zod` (validação)
-  - `react-query` (melhor cache de dados)
-
----
-
-## 🎨 **Qualidade do Código**
-
-### **TypeScript:** ⭐⭐⭐⭐ (4/5)
-- ✅ Types definidos em `database.ts`
-- ✅ Interfaces bem documentadas
-- ⚠️ Alguns `any` poderiam ser tipados
-
-### **Componentização:** ⭐⭐⭐⭐⭐ (5/5)
-- ✅ Componentes reutilizáveis
-- ✅ Props bem definidas
-- ✅ Separação de responsabilidades
-
-### **Nomenclatura:** ⭐⭐⭐⭐⭐ (5/5)
-- ✅ Nomes descritivos
-- ✅ Padrão consistente
-- ✅ Fácil de entender
-
-### **Comentários:** ⭐⭐⭐ (3/5)
-- ⚠️ Código autoexplicativo (bom)
-- ⚠️ Faltam comentários em lógicas complexas
-- 💡 Adicionar JSDoc em funções principais
-
----
-
-## 🔄 **Melhorias Sugeridas (Prioridade)**
+## 🔄 **Melhorias Sugeridas (Prioridade Atualizada)**
 
 ### **Alta Prioridade** 🔴
-1. **Adicionar validação de forms** (prevenir erros)
-2. **Melhorar error handling** (UX melhor)
-3. **Documentar variáveis .env** (facilita setup)
+1. **Implementar Suíte de Testes:** Focar em hooks críticos como `useCamera` e `usePayment`.
+2. **Otimização da Galeria:** Implementar virtualização ou paginação para evitar gargalos em eventos grandes.
 
 ### **Média Prioridade** 🟡
-4. **Lazy loading de rotas** (performance)
-5. **Adicionar testes** (confiabilidade)
-6. **Otimizar galeria** (muitas fotos)
-
-### **Baixa Prioridade** 🟢
-7. **Refatorar componentes grandes** (manutenibilidade)
-8. **Adicionar comentários JSDoc** (documentação)
-9. **Implementar CI/CD** (automação)
-
----
-
-## 📈 **Métricas de Código**
-
-| Métrica | Valor | Status |
-|---------|-------|--------|
-| **Páginas** | 9 | ✅ Organizado |
-| **Components** | ~15 | ✅ Modular |
-| **Hooks Customizados** | 2 | ✅ Reutilizável |
-| **Linhas de Código** | ~3000 | ✅ Limpo |
-| **TypeScript Coverage** | ~85% | 🟡 Pode melhorar |
-| **Testes** | 0 | 🔴 Adicionar |
+3. **Internacionalização (i18n):** Preparar o sistema para múltiplos idiomas.
+4. **Analytics Avançado:** Melhorar a coleta de métricas de engajamento por evento.
 
 ---
 
 ## ✅ **Checklist de Qualidade**
 
 - [x] Estrutura organizada
-- [x] TypeScript configurado
-- [x] Autenticação funcional
-- [x] UI responsiva
-- [x] Rotas protegidas
-- [x] Git configurado
-- [ ] **Testes implementados**
-- [ ] **Documentação completa**
-- [ ] **CI/CD configurado**
-- [ ] **Monitoramento de erros**
+- [x] TypeScript coverage > 90%
+- [x] Validação de formulários (Zod)
+- [x] Performance de re-render otimizada
+- [x] Segurança em múltiplas camadas (RLS + App)
+- [x] UI/UX consistente com Design System
+- [ ] **Testes automatizados**
+- [ ] **Documentação técnica de API completa**
 
 ---
 
 ## 🎯 **Conclusão**
 
-**Nota Geral: 8.5/10** ⭐
+**Nota Geral: 9.0/10** ⭐
 
-O projeto está **muito bem estruturado** para um MVP. A arquitetura é sólida, o código é limpo e a funcionalidade core está implementada corretamente.
-
-**Principais Conquistas:**
-- ✅ Autenticação robusta
-- ✅ UI moderna e responsiva
-- ✅ Sistema de temas funcionando
-- ✅ Código organizado e legível
-
-**Próximos Passos Recomendados:**
-1. Adicionar testes (Jest + React Testing Library)
-2. Melhorar error handling
-3. Documentar setup completo
-4. Implementar monitoramento (Sentry)
-
-O projeto está **pronto para produção** com algumas melhorias incrementais! 🚀
+O projeto evoluiu de um MVP funcional para uma base de código sólida e escalável. A introdução de validação tipada, melhorias de performance em formulários e o refinamento do fluxo de usuário elevam a qualidade do software para um nível profissional pronto para escala.

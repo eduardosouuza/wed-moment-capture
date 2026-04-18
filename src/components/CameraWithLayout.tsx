@@ -9,6 +9,7 @@ interface CameraWithLayoutProps {
     coupleName1?: string;
     coupleName2?: string;
     eventDate?: string;
+    eventName?: string;
     // Trial props
     isTrial?: boolean;
     photoLimit?: number;
@@ -22,9 +23,10 @@ const CameraWithLayout: React.FC<CameraWithLayoutProps> = ({
     onCapture,
     onClose,
     eventId,
-    coupleName1 = 'Vitoria',
-    coupleName2 = 'Eduardo',
-    eventDate = '20 de Setembro, 2025',
+    coupleName1 = '',
+    coupleName2 = '',
+    eventDate = '',
+    eventName = '',
     // Trial props
     isTrial = false,
     photoLimit = 0,
@@ -53,7 +55,8 @@ const CameraWithLayout: React.FC<CameraWithLayoutProps> = ({
                 capturedPhotos,
                 coupleName1,
                 coupleName2,
-                eventDate
+                eventDate,
+                eventName
             );
 
             console.log('✅ Layout criado com sucesso!');
@@ -125,6 +128,7 @@ const CameraWithLayout: React.FC<CameraWithLayoutProps> = ({
                 coupleName1={coupleName1}
                 coupleName2={coupleName2}
                 eventDate={eventDate}
+                eventName={eventName}
                 isTrial={isTrial}
                 photoLimit={photoLimit}
                 photoCount={photoCount}

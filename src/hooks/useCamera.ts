@@ -6,6 +6,7 @@ interface UseCameraProps {
     coupleName1: string;
     coupleName2: string;
     eventDate: string;
+    eventName?: string;
     isTrial: boolean;
     photoLimit: number;
     photoCount: number;
@@ -18,6 +19,7 @@ export function useCamera({
     coupleName1,
     coupleName2,
     eventDate,
+    eventName,
     isTrial,
     photoLimit,
     photoCount,
@@ -249,7 +251,16 @@ export function useCamera({
             ctx.fillStyle = '#333333';
             ctx.font = 'bold 20px sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText(`${coupleName1} & ${coupleName2}`, finalWidth / 2, textCenterY - 15);
+            
+            // Lógica de exibição de nomes
+            let displayText = '';
+            if (coupleName1 && coupleName2) {
+                displayText = `${coupleName1} & ${coupleName2}`;
+            } else {
+                displayText = coupleName1 || coupleName2 || eventName || '';
+            }
+            
+            ctx.fillText(displayText, finalWidth / 2, textCenterY - 15);
             ctx.font = '16px sans-serif';
             ctx.fillText(eventDate, finalWidth / 2, textCenterY + 10);
             ctx.font = '24px serif';

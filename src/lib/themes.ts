@@ -2,7 +2,7 @@
 // Cada tema contém: primary (cor principal), secondary (cor secundária), 
 // accent (cor de destaque) e light (versão clara para backgrounds)
 
-export type ThemeColor = 'purple' | 'blue' | 'pink' | 'green' | 'orange' | 'red';
+export type ThemeColor = 'purple' | 'blue' | 'pink' | 'green' | 'orange' | 'red' | 'rose' | 'ocean';
 
 export interface ThemeColors {
     name: string;
@@ -27,7 +27,7 @@ export const themes: Record<ThemeColor, ThemeColors> = {
         textOnPrimary: '#FFFFFF',
     },
     blue: {
-        name: 'Azul Oceano',
+        name: 'Azul Celeste',
         emoji: '🔵',
         primary: '#3B82F6',
         primaryHover: '#2563EB',
@@ -37,7 +37,7 @@ export const themes: Record<ThemeColor, ThemeColors> = {
         textOnPrimary: '#FFFFFF',
     },
     pink: {
-        name: 'Rosa Romântico',
+        name: 'Pink Vibrante',
         emoji: '💗',
         primary: '#EC4899',
         primaryHover: '#DB2777',
@@ -74,6 +74,26 @@ export const themes: Record<ThemeColor, ThemeColors> = {
         secondary: '#F87171',
         accent: '#FECACA',
         light: '#FEF2F2',
+        textOnPrimary: '#FFFFFF',
+    },
+    rose: {
+        name: 'Rosa Romântico',
+        emoji: '🌹',
+        primary: '#E85A70',
+        primaryHover: '#D4485E',
+        secondary: '#F28B9B',
+        accent: '#FDF2F4',
+        light: '#FFFBFC',
+        textOnPrimary: '#FFFFFF',
+    },
+    ocean: {
+        name: 'Azul Oceano',
+        emoji: '🌊',
+        primary: '#0891B2',
+        primaryHover: '#0E7490',
+        secondary: '#22D3EE',
+        accent: '#CFFAFE',
+        light: '#F0FDFF',
         textOnPrimary: '#FFFFFF',
     },
 };

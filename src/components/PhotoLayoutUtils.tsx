@@ -11,13 +11,15 @@ import { supabase } from '@/lib/supabase';
  * @param coupleName1 - Primeiro nome (ex: "Ana")
  * @param coupleName2 - Segundo nome (ex: "Carlos")
  * @param eventDate - Data formatada (ex: "15 de junho de 2025")
+ * @param eventName - Nome do evento para fallback
  * @returns Data URL do layout final
  */
 const createPhotoLayout = async (
     photoDataUrls: string[],
     coupleName1: string,
     coupleName2: string,
-    eventDate: string
+    eventDate: string,
+    eventName?: string
 ): Promise<string> => {
     return new Promise((resolve, reject) => {
         // Dimensões do canvas final
@@ -90,7 +92,16 @@ const createPhotoLayout = async (
                 ctx.fillStyle = '#333333';
                 ctx.font = 'bold 24px Arial, sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(`${coupleName1} & ${coupleName2}`, finalWidth / 2, textCenterY - 20);
+                
+                // Lógica de exibição de nomes
+                let displayText = '';
+                if (coupleName1 && coupleName2) {
+                    displayText = `${coupleName1} & ${coupleName2}`;
+                } else {
+                    displayText = coupleName1 || coupleName2 || eventName || '';
+                }
+                
+                ctx.fillText(displayText, finalWidth / 2, textCenterY - 20);
 
                 // Texto da data
                 ctx.font = '18px Arial, sans-serif';

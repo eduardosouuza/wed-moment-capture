@@ -11,6 +11,7 @@ interface CameraProps {
   coupleName1?: string;
   coupleName2?: string;
   eventDate?: string;
+  eventName?: string;
   isTrial?: boolean;
   photoLimit?: number;
   photoCount?: number;
@@ -20,9 +21,10 @@ const Camera: React.FC<CameraProps> = ({
   onCapture,
   onClose,
   eventId,
-  coupleName1 = 'Vitoria',
-  coupleName2 = 'Eduardo',
-  eventDate = '20 de Setembro, 2025',
+  coupleName1 = '',
+  coupleName2 = '',
+  eventDate = '',
+  eventName,
   isTrial = false,
   photoLimit = 0,
   photoCount = 0,
@@ -54,6 +56,7 @@ const Camera: React.FC<CameraProps> = ({
     coupleName1,
     coupleName2,
     eventDate,
+    eventName,
     isTrial,
     photoLimit,
     photoCount,

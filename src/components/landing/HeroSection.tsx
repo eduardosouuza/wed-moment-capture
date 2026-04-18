@@ -123,7 +123,7 @@ export function HeroSection() {
                 >
                   <img
                     src="/cabine-foto.png"
-                    alt="Cabine de fotos — Vitoria & Eduardo"
+                    alt="Casal feliz usando a cabine de fotos"
                     className="w-full block"
                     style={{ maxHeight: 310, objectFit: 'cover', objectPosition: 'top' }}
                   />

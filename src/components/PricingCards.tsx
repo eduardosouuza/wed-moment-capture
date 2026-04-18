@@ -24,7 +24,8 @@ const plans: Plan[] = [
         iconColor: 'text-gray-400',
         iconBg: 'bg-gray-50',
         features: [
-            '100 Fotos por evento',
+            '30 Fotos por evento',
+            'Apenas fotos (sem vídeo)',
             '1 evento ativo',
             'QR Code personalizado',
             'Temas básicos',

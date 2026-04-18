@@ -3,7 +3,7 @@
 export type UserRole = 'user' | 'admin';
 export type PlanType = 'free' | 'basic' | 'basico' | 'standard' | 'premium';
 export type EventType = 'wedding' | 'birthday' | 'corporate' | 'party';
-export type ThemeColor = 'purple' | 'blue' | 'pink' | 'green' | 'orange' | 'red';
+export type ThemeColor = 'purple' | 'blue' | 'pink' | 'green' | 'orange' | 'red' | 'rose' | 'ocean';
 export type MediaType = 'photo' | 'video';
 export type PaymentStatus = 'pending' | 'paid' | 'failed';
 export type ModerationStatus = 'pending' | 'approved' | 'rejected';
@@ -33,9 +33,23 @@ export interface Event {
     // Personalização
     couple_name_1: string | null;
     couple_name_2: string | null;
+    birthday_person_name?: string | null;
+    birthday_age?: number | null;
+    company_name?: string | null;
+    department?: string | null;
+    host_name?: string | null;
+    party_reason?: string | null;
     theme_color: ThemeColor;
     custom_message: string | null;
     logo_url: string | null;
+
+    // QR Code Customization
+    qr_code_fg_color: string;
+    qr_code_bg_color: string;
+    qr_code_margin: boolean;
+    qr_code_level: string;
+    qr_code_logo_url: string | null;
+    qr_code_logo_size: number;
 
     // Configurações
     max_photos: number;

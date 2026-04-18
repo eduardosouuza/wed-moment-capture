@@ -72,7 +72,16 @@ export function EventCard({ event, mediaCount, copiedId, onCopyLink, onDownloadQ
                             id={`qr-${event.slug}`}
                             value={eventUrl}
                             size={88}
-                            level="H"
+                            fgColor={event.qr_code_fg_color || '#000000'}
+                            bgColor={event.qr_code_bg_color || '#FFFFFF'}
+                            includeMargin={event.qr_code_margin || false}
+                            level={(event.qr_code_level as 'L' | 'M' | 'Q' | 'H') || 'H'}
+                            imageSettings={event.qr_code_logo_url ? {
+                                src: event.qr_code_logo_url,
+                                height: event.qr_code_logo_size || 24,
+                                width: event.qr_code_logo_size || 24,
+                                excavate: true,
+                            } : undefined}
                         />
                     </div>
                     <button

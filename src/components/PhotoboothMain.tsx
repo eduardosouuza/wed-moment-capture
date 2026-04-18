@@ -13,19 +13,38 @@ const PhotoboothMain: React.FC<PhotoboothMainProps> = ({ event }) => {
   const [showCamera, setShowCamera] = useState(false);
 
   // Extract event data
-  const displayName = event.name || 'Photobooth do Casamento';
-  const name1 = event.couple_name_1 || 'Vitoria';
-  const name2 = event.couple_name_2 || 'Eduardo';
+  let displayName = event.name || 'Photobooth';
+  let subtitleNames = '';
+
+  if (event.event_type === 'wedding') {
+    displayName = 'Photobooth do Casamento';
+    const n1 = event.couple_name_1 || '';
+    const n2 = event.couple_name_2 || '';
+    subtitleNames = n1 && n2 ? `${n1} & ${n2}` : (n1 || n2 || event.name || '');
+  } else if (event.event_type === 'birthday') {
+    displayName = `Photobooth do(a) ${event.birthday_person_name || 'Aniversariante'}`;
+    subtitleNames = event.birthday_person_name || event.name || '';
+  } else if (event.event_type === 'corporate') {
+    displayName = `Photobooth da ${event.company_name || 'Empresa'}`;
+    subtitleNames = event.company_name || event.name || '';
+  } else if (event.event_type === 'party') {
+    displayName = `Photobooth do(a) ${event.host_name || 'Anfitrião'}`;
+    subtitleNames = event.host_name || event.name || '';
+  } else {
+    subtitleNames = event.name || '';
+  }
+
+  const name1 = event.couple_name_1 || '';
+  const name2 = event.couple_name_2 || '';
+  
   const eventDate = event.event_date
     ? new Date(event.event_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
-    : '20 de Setembro, 2025';
+    : new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 
   const handleMediaCapture = (mediaData: { type: 'photo' | 'video'; data: string; timestamp: number }) => {
     // A galeria atualiza automaticamente via polling (Gallery.tsx)
     setShowCamera(false);
   };
-
-
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--theme-light, #F5F3FF)' }}>
@@ -38,7 +57,7 @@ const PhotoboothMain: React.FC<PhotoboothMainProps> = ({ event }) => {
         </div>
 
         <h1 className="text-4xl md:text-5xl font-display font-semibold mb-3 tracking-tight" style={{ color: 'var(--theme-primary, #8B5CF6)' }}>
-          Photobooth do Casamento
+          {displayName}
         </h1>
 
         <p className="text-lg mb-2 font-light" style={{ color: 'var(--theme-primary, #8B5CF6)' }}>
@@ -81,7 +100,7 @@ const PhotoboothMain: React.FC<PhotoboothMainProps> = ({ event }) => {
         <div className="flex items-center justify-center space-x-2 mb-3">
           <Heart className="w-4 h-4" style={{ color: 'var(--theme-primary, #8B5CF6)' }} />
           <span className="font-display font-medium text-sm" style={{ color: 'var(--theme-primary, #8B5CF6)' }}>
-            {name1} & {name2} • {eventDate}
+            {subtitleNames} • {eventDate}
           </span>
           <Heart className="w-4 h-4" style={{ color: 'var(--theme-primary, #8B5CF6)' }} />
         </div>
@@ -108,9 +127,10 @@ const PhotoboothMain: React.FC<PhotoboothMainProps> = ({ event }) => {
           onCapture={handleMediaCapture}
           onClose={() => setShowCamera(false)}
           eventId={event.id}
-          coupleName1={name1}
-          coupleName2={name2}
+          coupleName1={event.event_type === 'wedding' ? name1 : subtitleNames}
+          coupleName2={event.event_type === 'wedding' ? name2 : ''}
           eventDate={eventDate}
+          eventName={event.name}
           isTrial={event.is_trial}
           photoLimit={event.photo_limit}
           photoCount={event.photo_count}

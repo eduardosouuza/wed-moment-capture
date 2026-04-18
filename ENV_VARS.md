@@ -22,6 +22,12 @@ Este arquivo documenta todas as variáveis de ambiente necessárias para executa
   3. Vá em **Settings** → **API**
   4. Copie o valor de **anon public**
 
+### **VITE_STRIPE_PUBLISHABLE_KEY**
+- **Descrição:** Chave pública do Stripe (Publishable Key)
+- **Formato:** `pk_test_...` ou `pk_live_...`
+- **Uso:** Necessário para o checkout no frontend, embora a maioria da lógica esteja nas Edge Functions.
+- **Onde conseguir:** Stripe Dashboard → Developers → API keys.
+
 ## 🔧 **Como Configurar**
 
 ### **1. Crie o arquivo `.env`**
