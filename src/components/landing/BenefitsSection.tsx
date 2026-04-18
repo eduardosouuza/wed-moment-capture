@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import gsap from 'gsap';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Smartphone, QrCode, Download, Palette, Zap, Users } from 'lucide-react';
 import { useThemeAccent } from '@/hooks/useThemeAccent';
@@ -6,15 +6,12 @@ import { useThemeAccent } from '@/hooks/useThemeAccent';
 export function BenefitsSection() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const { active, themes, setTheme } = useThemeAccent();
-  const [ripple, setRipple] = useState<string | null>(null);
 
   const handleSwatch = (theme: typeof themes[0], e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
     setTheme(theme, x, y);
-    setRipple(theme.id);
-    setTimeout(() => setRipple(null), 700);
   };
 
   const anim = () =>
@@ -154,40 +151,45 @@ export function BenefitsSection() {
                 <div className="flex items-center gap-2.5 mb-3">
                   {themes.map((theme) => {
                     const isActive = active.id === theme.id;
-                    const isRippling = ripple === theme.id;
                     return (
                       <button
                         key={theme.id}
                         title={theme.label}
+                        data-swatch={theme.color}
                         onClick={(e) => handleSwatch(theme, e)}
-                        className="relative w-8 h-8 rounded-full border-2 border-white shadow-md cursor-pointer focus:outline-none overflow-hidden"
+                        className="relative w-8 h-8 rounded-full border-2 border-white cursor-pointer focus:outline-none"
                         style={{
                           background: theme.color,
-                          transform: isActive ? 'scale(1.25)' : 'scale(1)',
+                          scale: isActive ? '1.28' : '1',
                           boxShadow: isActive
-                            ? `0 0 0 3px white, 0 0 0 5px ${theme.color}, 0 4px 12px ${theme.light}`
-                            : '0 2px 6px rgba(0,0,0,0.15)',
-                          transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease',
+                            ? `0 0 0 3px white, 0 0 0 5.5px ${theme.color}, 0 6px 16px ${theme.light}`
+                            : '0 2px 8px rgba(0,0,0,0.18)',
+                          transition: 'box-shadow 0.35s ease',
                         }}
                         aria-pressed={isActive}
-                      >
-                        {/* Ripple wave on click */}
-                        {isRippling && (
-                          <span
-                            className="absolute inset-0 rounded-full animate-ping"
-                            style={{ background: theme.color, opacity: 0.5 }}
-                          />
-                        )}
-                      </button>
+                        onMouseEnter={(e) => {
+                          if (!isActive) {
+                            gsap.to(e.currentTarget, { scale: 1.18, duration: 0.22, ease: 'back.out(2)' });
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isActive) {
+                            gsap.to(e.currentTarget, { scale: 1, duration: 0.2, ease: 'power2.out' });
+                          }
+                        }}
+                      />
                     );
                   })}
                 </div>
                 {/* Active label */}
-                <p className="text-[11px] font-bold uppercase tracking-widest"
-                  style={{ color: active.color, transition: 'color 0.4s ease' }}>
+                <p
+                  className="text-[11px] font-bold uppercase tracking-widest transition-colors duration-400"
+                  style={{ color: active.color }}
+                >
                   ● Tema {active.label} ativo
                 </p>
               </div>
+
             </div>
           </div>
 
