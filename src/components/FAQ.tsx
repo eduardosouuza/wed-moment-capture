@@ -11,10 +11,7 @@ const faqData: FAQItem[] = [
     question: 'Como funciona o Lume?',
     answer: 'A Lume é uma cabine de fotos 100% digital. Você cria um evento, compartilha um QR Code com os convidados, e eles podem tirar fotos e gravar vídeos diretamente pelo celular deles, sem baixar nenhum app. Tudo vai para uma galeria ao vivo no telão.',
   },
-  {
-    question: 'Posso testar antes de comprar?',
-    answer: 'Sim! Você pode criar uma conta gratuita e testar as funcionalidades básicas com limite de envios para ver como tudo funciona perfeitamente.',
-  },
+
   {
     question: 'Preciso de internet no local do evento?',
     answer: 'Os convidados precisarão de 4G/5G ou Wi-Fi do local para enviar as fotos. Hoje em dia é super comum e os pacotes de dados dão conta do recado tranquilamente.',

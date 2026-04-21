@@ -33,7 +33,7 @@ export function CTASection() {
                 onClick={() => window.scrollTo({ top: document.getElementById('pricing')?.offsetTop || 0, behavior: 'smooth' })}
                 className="btn-rose px-10 py-5 text-lg shadow-[0_8px_30px_-8px_rgba(232,90,112,0.6)]"
               >
-                Crie seu Evento Gratuitamente
+                Criar Meu Evento
               </button>
             </div>
           </div>
