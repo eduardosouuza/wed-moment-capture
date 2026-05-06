@@ -11,7 +11,7 @@ import { useAutoAnimations } from '@/hooks/usePageAnimations';
 import { Navbar } from '@/components/landing/Navbar';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { VisualDemoSection } from '@/components/landing/VisualDemoSection';
-import { ServicesSection } from '@/components/landing/ServicesSection';
+
 import { BenefitsSection } from '@/components/landing/BenefitsSection';
 import { PricingSection } from '@/components/landing/PricingSection';
 import { CTASection } from '@/components/landing/CTASection';
@@ -47,7 +47,7 @@ export default function Index() {
       <Navbar />
 
       <HeroSection />
-      <ServicesSection />
+
       <VisualDemoSection />
       <BenefitsSection />
       <PricingSection handleSelectPlan={handleSelectPlan} />
