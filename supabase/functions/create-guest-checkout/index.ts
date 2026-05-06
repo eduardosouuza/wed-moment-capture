@@ -6,9 +6,15 @@ const FRONTEND_URL = Deno.env.get('FRONTEND_URL') || 'https://wed-moment-capture
 const ALLOWED_ORIGIN = Deno.env.get('ALLOWED_ORIGIN') || 'https://wed-moment-capture.vercel.app';
 
 function corsHeaders(origin: string | null) {
+    // Permite localhost e domínios da Vercel para este projeto
     let allowed = ALLOWED_ORIGIN;
-    if (origin && (origin === ALLOWED_ORIGIN || origin.startsWith('http://localhost:'))) {
-        allowed = origin;
+    if (origin) {
+        if (origin.startsWith('http://localhost:') || 
+            origin.includes('lume-cabine-de-fotos-virtual.vercel.app') || 
+            origin.includes('wed-moment-capture.vercel.app') ||
+            origin === ALLOWED_ORIGIN) {
+            allowed = origin;
+        }
     }
     return {
         'Access-Control-Allow-Origin': allowed,
@@ -87,6 +93,9 @@ serve(async (req) => {
             },
         };
 
+        // Determine base URL dynamically for redirects
+        const baseUrl = isTestMode ? 'http://localhost:8080' : (origin || FRONTEND_URL);
+
         // Create Checkout Session for GUEST (no user_id yet)
         const session = await stripe.checkout.sessions.create({
             line_items: [
@@ -97,8 +106,8 @@ serve(async (req) => {
             ],
             mode: 'payment',
             customer_email: email,
-            success_url: `${isTestMode ? 'http://localhost:8080' : FRONTEND_URL}/register?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${isTestMode ? 'http://localhost:8080' : FRONTEND_URL}/#pricing`,
+            success_url: `${baseUrl}/register?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${baseUrl}/#pricing`,
             metadata: {
                 plan_type: planType,
                 checkout_type: 'guest',
