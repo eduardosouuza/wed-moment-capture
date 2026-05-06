@@ -5,14 +5,6 @@ import { rateLimit, getClientIp } from '../_shared/rate-limit.ts';
 const FRONTEND_URL = Deno.env.get('FRONTEND_URL') || 'https://wed-moment-capture.vercel.app';
 const ALLOWED_ORIGIN = Deno.env.get('ALLOWED_ORIGIN') || 'https://wed-moment-capture.vercel.app';
 
-// Product IDs from Stripe Dashboard (set via Supabase secrets for prod,
-// leave unset locally to fall back to inline price_data without product link)
-const PRODUCT_IDS: Record<string, string> = {
-    basico:   Deno.env.get('STRIPE_PRODUCT_BASICO')   || '',
-    standard: Deno.env.get('STRIPE_PRODUCT_STANDARD') || '',
-    premium:  Deno.env.get('STRIPE_PRODUCT_PREMIUM')  || '',
-};
-
 function corsHeaders(origin: string | null) {
     let allowed = ALLOWED_ORIGIN;
     if (origin && (origin === ALLOWED_ORIGIN || origin.startsWith('http://localhost:'))) {
@@ -57,8 +49,8 @@ serve(async (req) => {
         }
 
         const isTestMode = origin && origin.startsWith('http://localhost:');
-        const secretKey = isTestMode 
-            ? Deno.env.get('STRIPE_SECRET_KEY_TEST') 
+        const secretKey = isTestMode
+            ? Deno.env.get('STRIPE_SECRET_KEY_TEST')
             : Deno.env.get('STRIPE_SECRET_KEY');
 
         if (!secretKey) {
@@ -71,11 +63,12 @@ serve(async (req) => {
             httpClient: Stripe.createFetchHttpClient(),
         });
 
-        // Plan prices — linked to Stripe Dashboard products when STRIPE_PRODUCT_* env vars are set
-        const PLAN_PRICES: Record<string, { amount: number; name: string }> = {
-            basico:   { amount: 2990,  name: 'Lume — Plano Básico' },
-            standard: { amount: 4990,  name: 'Lume — Plano Standard' },
-            premium:  { amount: 9990,  name: 'Lume — Plano Premium' },
+        // Plan prices — always inline (product_data) to guarantee mode:'payment' one-time works
+        // regardless of how products are configured in the Stripe Dashboard
+        const PLAN_PRICES: Record<string, { amount: number; name: string; description: string }> = {
+            basico:   { amount: 2990,  name: 'Lume — Plano Básico',    description: 'Acesso ao Plano Básico Lume' },
+            standard: { amount: 4990,  name: 'Lume — Plano Standard',  description: 'Acesso ao Plano Standard Lume' },
+            premium:  { amount: 9990,  name: 'Lume — Plano Premium',   description: 'Acesso ao Plano Premium Lume' },
         };
 
         const plan = PLAN_PRICES[planType as keyof typeof PLAN_PRICES];
@@ -83,26 +76,22 @@ serve(async (req) => {
             throw new Error('Invalid plan type');
         }
 
-        const testProductId = Deno.env.get(`STRIPE_PRODUCT_${planType.toUpperCase()}_TEST`);
-        const prodProductId = PRODUCT_IDS[planType];
-        const productId = isTestMode ? testProductId : prodProductId;
-
-        const priceData: Record<string, unknown> = {
+        // Always use product_data (inline) — never reference existing Stripe products
+        // This guarantees mode:'payment' (one-time) always works
+        const priceData = {
             currency: 'brl',
             unit_amount: plan.amount,
-            product_data: { name: plan.name },
+            product_data: {
+                name: plan.name,
+                description: plan.description,
+            },
         };
-        // In production, link to the existing Stripe product
-        if (productId) {
-            priceData.product = productId;
-            delete (priceData as any).product_data;
-        }
 
         // Create Checkout Session for GUEST (no user_id yet)
         const session = await stripe.checkout.sessions.create({
             line_items: [
                 {
-                    price_data: priceData as any,
+                    price_data: priceData,
                     quantity: 1,
                 },
             ],
