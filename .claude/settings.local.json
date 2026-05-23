@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Sleep -Seconds 3; try { $r = Invoke-WebRequest -Uri 'http://localhost:5173' -TimeoutSec 5 -UseBasicParsing; Write-Output \"Status: $\\($r.StatusCode\\)\" } catch { Write-Output \"Error: $_\" })"
+    ]
+  }
+}

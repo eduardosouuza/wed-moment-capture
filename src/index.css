@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Driver.js tour — Lume brand skin ─────────────────────── */
+.lume-tour-popover {
+  border-radius: 20px !important;
+  padding: 20px 22px !important;
+  box-shadow: 0 20px 60px -12px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.04) !important;
+  font-family: inherit !important;
+}
+.lume-tour-popover .driver-popover-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #1c1c1e !important;
+  margin-bottom: 6px !important;
+}
+.lume-tour-popover .driver-popover-description {
+  font-size: 13px !important;
+  color: #6b7280 !important;
+  line-height: 1.55 !important;
+}
+.lume-tour-popover .driver-popover-footer button {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+}
+.lume-tour-popover .driver-popover-next-btn {
+  background: #E85A70 !important;
+  border-color: #E85A70 !important;
+}
+.lume-tour-popover .driver-popover-next-btn:hover {
+  background: #d94f65 !important;
+}
+.lume-tour-popover .driver-popover-progress-text {
+  font-size: 11px !important;
+  color: #9ca3af !important;
+}
+
+/* ============================================
+   LUME — CLEAN BENTO BORDER-RADIUS DESIGN SYSTEM
+   Baseado no Memoly (memoly.com.br)
+   Font: Plus Jakarta Sans
+   Background: #F8F9FA (Very light gray/off-white)
+   Cards: #FFFFFF
+   Primary: Rose/Coral (#E85A70)
+   Text: Deep Charcoal (#2B2B2F)
+   ============================================ */
+
+@layer base {
+  :root {
+    --background: 220 14% 96%;   /* #F8F9FA */
+    --foreground: 240 5% 18%;    /* #2B2B2F */
+
+    --card: 0 0% 100%;           /* #FFFFFF */
+    --card-foreground: 240 5% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5% 18%;
+
+    --primary: 349 76% 63%;      /* #E85A70 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 18% 95%;     /* #F6F3F1 */
+    --secondary-foreground: 240 5% 18%;
+
+    --muted: 220 14% 98%;
+    --muted-foreground: 240 4% 46%;  /* #71717A */
+
+    --accent: 345 87% 50%;       /* #E11D48 */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 24 22% 91%;        /* #EDE7E4 */
+    --input: 24 22% 91%;
+    --ring: 349 76% 63%;
+
+    --radius: 1.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 5% 18%;
+    --sidebar-primary: 349 76% 63%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 30 18% 95%;
+    --sidebar-accent-foreground: 240 5% 18%;
+    --sidebar-border: 24 22% 91%;
+    --sidebar-ring: 349 76% 63%;
+
+    /* ── Lume accent theme — driven by swatch click ── */
+    --lume-accent: #E85A70;
+    --lume-accent-light: rgba(232, 90, 112, 0.12);
+    --lume-accent-ring: rgba(232, 90, 112, 0.25);
+  }
+
+  .dark {
+    --background: 240 5% 9%;     /* #18181B */
+    --foreground: 0 0% 98%;
+
+    --card: 240 4% 16%;          /* #27272A */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 4% 16%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 349 76% 63%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 4% 22%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 4% 22%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 345 87% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 63% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 4% 25%;
+    --input: 240 4% 25%;
+    --ring: 349 76% 63%;
+  }
+}
+
+
+@layer base {
+  * { @apply border-border; }
+
+  body {
+    @apply bg-background text-foreground;
+    background-color: #F8F9FA; /* Garante safe-area correta no iOS */
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Adicionando grid suave ao fundo imitando o design clean do Memoly */
+    background-image:
+      linear-gradient(rgba(237, 231, 228, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237, 231, 228, 0.4) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #1c1c1e;
+  }
+}
+
+/* Remover autofill background amarelo (Chrome/Safari/Edge) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #2b2b2f !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  caret-color: #2b2b2f;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #27272a inset !important;
+  -webkit-text-fill-color: #fafafa !important;
+  background-color: #27272a !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--lume-accent, #E85A70); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--lume-scrollbar, #BE123C); }
+::-webkit-scrollbar-horizontal { display: none; }
+html { scrollbar-width: thin; scrollbar-color: var(--lume-accent, #E85A70) #F8F9FA; }
+
+/* ===== TRANSITIONS ===== */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-duration: 300ms;
+}
+*:focus-visible { outline: 2px solid var(--lume-accent, #E85A70); outline-offset: 2px; }
+
+/* ===== LENIS COMPAT ======= */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* ===== BENTO CARDS (MEMOLY STYLE) ===== */
+.bento-card {
+  background: #ffffff;
+  border: 1px solid #ede7e4;
+  border-radius: 32px; /* Raio bem grande padrão do memoly */
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.bento-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px var(--lume-accent-ring, rgba(232, 90, 112, 0.25));
+  border-color: var(--lume-accent-ring, rgba(232, 90, 112, 0.25));
+}
+
+/* ===== BOTÕES MEMOLY ===== */
+.btn-rose {
+  background-color: var(--lume-accent, #E85A70);
+  color: white;
+  border-radius: 14px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.btn-rose:hover {
+  filter: brightness(0.88);
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background-color: #F6F3F1;
+  color: #2b2b2f;
+  border-radius: 14px;
+  font-weight: 600;
+  border: 1px solid #ede7e4;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background-color: #ede7e4;
+}
+
+/* ===== FONT UTILITY ===== */
+.font-display {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+/* ===== BADGE NUMÉRICA (MEMOLY STYLE) ===== */
+.badge-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FDF2F4;
+  color: #E85A70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid rgba(232, 90, 112, 0.2);
+}
+
+/* ===== BADGE ROSE ===== */
+.badge-rose {
+  background-color: rgba(232, 90, 112, 0.10);
+  color: #E85A70;
+  border: 1px solid rgba(232, 90, 112, 0.20);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background-color: rgba(232, 90, 112, 0.22);
+  color: inherit;
+}
+
+/* ===== THEME RIPPLE OVERLAY ===== */
+.lume-ripple-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  clip-path: circle(0% at var(--rx, 50%) var(--ry, 50%));
+  opacity: 0;
+  will-change: clip-path, opacity;
+}
+
+.lume-ripple-overlay.lume-ripple-active {
+  animation: lume-ripple 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lume-ripple {
+  0%   { clip-path: circle(0%    at var(--rx, 50%) var(--ry, 50%)); opacity: 0.38; }
+  55%  { clip-path: circle(100%  at var(--rx, 50%) var(--ry, 50%)); opacity: 0.18; }
+  100% { clip-path: circle(150%  at var(--rx, 50%) var(--ry, 50%)); opacity: 0;    }
+}

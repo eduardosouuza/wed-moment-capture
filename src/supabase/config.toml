@@ -1,0 +1,54 @@
+# Supabase Configuration
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://localhost:3000"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+
+[functions]
+# Allow anonymous access to stripe-webhook
+# This is required for Stripe to call the webhook without authentication
+[functions.stripe-webhook]
+verify_jwt = false
+
+# Allow anonymous access to payment-webhook
+# This is required for Mercado Pago to call the webhook without authentication
+[functions.payment-webhook]
+verify_jwt = false
+
+# Allow anonymous access to create-guest-checkout
+# This is required for guest users to create checkout sessions before registering
+[functions.create-guest-checkout]
+verify_jwt = false
+
+[edge_runtime]
+policy = "per_worker"

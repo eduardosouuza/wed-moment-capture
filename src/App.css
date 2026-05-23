@@ -1,0 +1,28 @@
+/* App.css - Limpo sem cores ou efeitos */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Remove qualquer background padrão */
+html {
+  background: #F8F9FA; /* Evita safe-area amarela no iOS */
+  margin: 0;
+  padding: 0;
+}
+
+body,
+#root {
+  background: #F8F9FA;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important;
+  /* Respeita a safe-area do iPhone (barra home) */
+  padding-bottom: env(safe-area-inset-bottom);
+}
